@@ -10,6 +10,16 @@ const wordCloud = [
   '不夠善良的我們', '有生之年', '人選之人', '媽，別鬧了！', '聽海湧', '商魂', '台劇',
 ]
 
+const originFlow = [
+  ['01', '公司行銷需求', '追蹤新節目上架 Netflix 後的每日排行表現。'],
+  ['02', '單一節目折線圖', '整理每日名次，製作每週行銷會議可用素材。'],
+  ['03', '發現比較不足', '單看一部作品，無法判斷表現是否真的突出。'],
+  ['04', '擴展比較基準', '加入其他台灣節目與更長時間範圍，建立市場脈絡。'],
+]
+
+const rawDataProblems = ['Facebook 貼文', '非結構化文字', '格式不固定', '難以回溯', '不易比較']
+const structuredDataValues = ['Excel / JSON 資料庫', '欄位結構化', '可篩選查詢', '可跨週比較', '可視覺化分析']
+
 const pipeline = [
   ['🔎', 'Facebook 排行貼文', 'Netflix Taiwan 每週公開排行資訊，原始資料為非結構化中文貼文。'],
   ['🐍', 'Python 爬蟲', '以 Selenium 與文字解析邏輯擷取日期、節目名稱、類型與排名。'],
@@ -26,9 +36,9 @@ const evolutionSteps = [
 ]
 
 const crawlerChallenges = [
-  ['日期篩選與滾動載入', 'Facebook 預設從最新貼文開始載入，需要透過日期篩選與滾動操作才能回到歷史資料。一次滾動過多也可能讓頁面狀態改變，因此我改成分段抓取、定期刷新與調整日期篩選。'],
-  ['進度不可見', '爬蟲早期執行時沒有即時回饋，我無法判斷是否成功抓取、抓了多少資料，或是否卡在頁面互動。後來我要求加入終端機進度輸出與抓取數量檢查，讓除錯過程變得可觀察。'],
-  ['非結構化文字解析', '貼文格式並不統一，同一作品可能出現不同名稱或類型錯誤，或甚至出現抓取失敗的情況，例如「葬送的芙莉蓮 第二季」與「葬送的芙莉蓮 S2」被視為不同的節目，因此需要後續資料清理，讓名稱正規化與人工校正。'],
+  ['日期篩選與滾動載入', 'Facebook 預設從最新貼文開始載入，需要透過日期篩選與滾動操作才能回到歷史資料。一次滾動過多也可能讓頁面狀態改變。', '改成分段抓取、定期刷新頁面，並依日期區間調整篩選條件，降低頁面狀態變動造成的抓取失敗。'],
+  ['進度不可見', '爬蟲早期執行時沒有即時回饋，我無法判斷是否成功抓取、抓了多少資料，或是否卡在頁面互動。', '加入終端機進度輸出、抓取數量與狀態訊息，讓除錯過程變得可觀察，也能即時判斷資料量是否異常。'],
+  ['非結構化文字解析', '貼文格式並不統一，同一作品可能出現不同名稱或類型錯誤，或甚至出現抓取失敗的情況。', '建立後續資料清理流程，處理名稱正規化與人工校正，例如將「葬送的芙莉蓮 第二季」與「葬送的芙莉蓮 S2」合併判斷。'],
 ]
 
 const cleaningRules = [
@@ -71,15 +81,15 @@ function App() {
       <div className="actions"><a className="btn primary" href={links.demo} target="_blank" rel="noreferrer">View Live Demo ↗</a><a className="btn secondary" href={links.github} target="_blank" rel="noreferrer">GitHub Repo ↗</a></div>
     </div><aside className="snapshot"><p className="muted">Project Snapshot</p><h2>2024–2026 的 Netflix 台灣串流排行資料</h2><p className="snapshotDesc">資料期間涵蓋 2024/01/01 至 2026/04/27，包含每日榜單蒐集、週榜彙整與台劇追蹤資料。</p><div className="statsGrid">{stats.map(([value, label]) => <div className="statCard" key={label}><strong>{value}</strong><span>{label}</span></div>)}</div></aside></div></section>
 
-    <section className="container section"><article className="card wide"><p className="sectionLabel">Project Origin</p><h2>從一檔節目的行銷追蹤需求開始</h2><p>這個專案最初來自我在彼此影業實習期間公司內部的行銷需求：公司希望觀察一檔新節目上架 Netflix 後的每日排行表現，作為每週行銷會議與節目成效討論的素材。</p><p>一開始，我的任務只是整理單一節目的 Netflix 每日排名，並使用 Excel 製作簡單的折線圖。但在整理過程中，我發現單一節目無法客觀呈現節目的收視表現，於是與主管討論，需要增加其他台灣節目在 Netflix 的收視排行走勢圖作比較。</p></article></section>
+    <section className="container section"><article className="card wide"><p className="sectionLabel">Project Origin</p><h2>從一檔節目的行銷追蹤需求開始</h2><p>這個專案最初來自我在彼此影業實習期間公司內部的行銷需求：公司希望觀察一檔新節目上架 Netflix 後的每日排行表現，作為每週行銷會議與節目成效討論的素材。</p><p>一開始，我的任務只是整理單一節目的 Netflix 每日排名，並使用 Excel 製作簡單的折線圖。但在整理過程中，我發現單一節目無法客觀呈現節目的收視表現，於是與主管討論，需要增加其他台灣節目在 Netflix 的收視排行走勢圖作比較。</p></article><div className="originFlow">{originFlow.map(([no, title, desc], index) => <div className="originStep" key={title}><span>{no}</span><strong>{title}</strong><p>{desc}</p>{index < originFlow.length - 1 && <em>→</em>}</div>)}</div></section>
 
-    <section className="container section twoCol"><article className="card wide"><p className="sectionLabel">Problem</p><h2>公開資料存在，但無法直接分析</h2><p>因為 Netflix 並不會留下每日排行紀錄，所以必須另尋數據來源。我在 Facebook 找到專門紀錄排行的粉絲專頁，該頁面長期發布 Netflix Taiwan 的每日排行資訊，但這些資料分散在社群貼文中，沒有結構化歷史資料庫。這使得使用者很難回顧不同年份、類型或台劇作品的排名變化。</p><p><strong>原始資料雖然公開，但公開不等於可分析。</strong> 這個專案的核心問題，是如何把散落在社群平台上的非結構化文字資料，轉換成可以查詢、比較與視覺化的資料產品。</p></article><article className="card"><p className="sectionLabel">Project Goal</p><h2>建立可重複更新的排行資料流程</h2><p>此專案目標不是只做一次性的視覺化頁面，而是建立一套能持續更新的資料流程，讓 Netflix 台灣排行資料能從 Facebook 貼文轉換為可查詢、可比較、可維護的資料資產。</p></article></section>
+    <section className="container section"><div className="twoCol"><article className="card wide"><p className="sectionLabel">Problem</p><h2>公開資料存在，但無法直接分析</h2><p>因為 Netflix 並不會留下每日排行紀錄，所以必須另尋數據來源。我在 Facebook 找到專門紀錄排行的粉絲專頁，該頁面長期發布 Netflix Taiwan 的每日排行資訊，但這些資料分散在社群貼文中，沒有結構化歷史資料庫。這使得使用者很難回顧不同年份、類型或台劇作品的排名變化。</p><p><strong>原始資料雖然公開，但公開不等於可分析。</strong> 這個專案的核心問題，是如何把散落在社群平台上的非結構化文字資料，轉換成可以查詢、比較與視覺化的資料產品。</p></article><article className="card"><p className="sectionLabel">Project Goal</p><h2>建立可重複更新的排行資料流程</h2><p>此專案目標不是只做一次性的視覺化頁面，而是建立一套能持續更新的資料流程，讓 Netflix 台灣排行資料能從 Facebook 貼文轉換為可查詢、可比較、可維護的資料資產。</p></article></div><div className="dataCompare"><div className="compareCard"><p className="sectionLabel">Before</p><h3>原始公開資料</h3>{rawDataProblems.map(item => <span key={item}>{item}</span>)}</div><div className="compareArrow">Data Cleaning<br />+ Pipeline</div><div className="compareCard compareAfter"><p className="sectionLabel">After</p><h3>可分析資料產品</h3>{structuredDataValues.map(item => <span key={item}>{item}</span>)}</div></div></section>
 
-    <section className="section panel"><div className="container"><p className="sectionLabel">Problem Evolution</p><h2>從單一節目追蹤，到市場競爭脈絡分析</h2><p className="sectionIntro">這個專案不是一開始就規劃成完整儀表板，而是在實際使用與討論中，一步步從單一節目追蹤擴展成市場觀察工具。</p><div className="decisionGrid">{evolutionSteps.map(([no, title, desc]) => <article className="card" key={title}><strong className="number">{no}</strong><h3>{title}</h3><p>{desc}</p></article>)}</div></div></section>
+    <section className="section panel"><div className="container"><p className="sectionLabel">Problem Evolution</p><h2>從單一節目追蹤，到市場競爭脈絡分析</h2><p className="sectionIntro">這個專案不是一開始就規劃成完整儀表板，而是在實際使用與討論中，一步步從單一節目追蹤擴展成市場觀察工具。</p><div className="timeline">{evolutionSteps.map(([no, title, desc]) => <article className="timelineItem" key={title}><span>{no}</span><h3>{title}</h3><p>{desc}</p></article>)}</div></div></section>
 
     <section className="container section twoCol"><article className="card"><p className="sectionLabel">From Excel to Dashboard</p><h2>讓資料不只被整理，也能被探索</h2><p>第一版分析主要在 Excel 中完成：我蒐集全年度週榜資料，建立「排名轉積分」的計算方式，並用樞紐分析製作年度排行榜。</p><p>但在使用過程中，我發現 Excel 適合資料整理與初步分析，卻不適合讓團隊快速切換年份、類型、節目或台劇比較視角。因此我開始使用 Claude Code 協助建立互動式儀表板，並與 AI 一起討論不同資料問題適合使用哪些圖表呈現。</p></article><article className="card"><p className="sectionLabel">Impact</p><h2>從貼文回顧變成資料探索</h2><p>這個專案將原本需要逐篇翻找 Facebook 貼文的排行資料，轉換為可依年份、週次、類型與節目查詢的互動式工具，降低歷史資料回溯成本，並讓台劇與不同影視類型的趨勢比較成為可能。</p></article></section>
 
-    <section className="container section"><p className="sectionLabel">Crawler Challenge</p><h2>將人工蒐集流程轉為半自動化資料管線</h2><p className="sectionIntro">當儀表板初版完成後，我發現只使用 2025 年週榜資料仍不夠完整。若要補齊更多年份，甚至加入日榜資料，人工蒐集成本會快速失控。因此我進一步建立 Facebook 爬蟲工具，一次性蒐集 2024/01/01 至 2026/04/27 的每日榜單資料。</p><p className="sectionIntro">但是卻在擴大規模中在爬蟲撰寫上遇到了許多困難，幸好最後都能一一克服。</p><div className="featureGrid">{crawlerChallenges.map(([title, desc]) => <article className="card" key={title}><span className="check">!</span><h3>{title}</h3><p>{desc}</p></article>)}</div></section>
+    <section className="container section"><p className="sectionLabel">Crawler Challenge</p><h2>將人工蒐集流程轉為半自動化資料管線</h2><p className="sectionIntro">當儀表板初版完成後，我發現只使用 2025 年週榜資料仍不夠完整。若要補齊更多年份，甚至加入日榜資料，人工蒐集成本會快速失控。因此我進一步建立 Facebook 爬蟲工具，一次性蒐集 2024/01/01 至 2026/04/27 的每日榜單資料。</p><p className="sectionIntro">但是卻在擴大規模中在爬蟲撰寫上遇到了許多困難，幸好最後都能一一克服。</p><div className="challengeGrid">{crawlerChallenges.map(([title, problem, solution]) => <article className="challengeCard" key={title}><h3>{title}</h3><div className="challengeBlock"><strong>問題</strong><p>{problem}</p></div><div className="challengeBlock solution"><strong>解法</strong><p>{solution}</p></div></article>)}</div></section>
 
     <section className="section panel"><div className="container"><p className="sectionLabel">System Architecture</p><h2>從 Facebook 貼文到互動式儀表板</h2><p className="sectionIntro">我將自動化資料蒐集與人工資料校正分離，讓整個流程兼顧效率與資料品質。</p><div className="pipeline">{pipeline.map(([icon, title, desc], index) => <article className="pipeCard" key={title}><span className="pipeIcon">{icon}</span><h3>{title}</h3><p>{desc}</p>{index < pipeline.length - 1 && <span className="arrow">→</span>}</article>)}</div></div></section>
 
