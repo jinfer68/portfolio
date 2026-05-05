@@ -4,7 +4,6 @@ const stats = [
 ]
 
 const imageBase = 'https://jinfer68.github.io/portfolio/images/'
-const evolutionImageBase = `${imageBase}evolution/`
 
 const wordCloud = [
   '模仿犯', '此時此刻', '誰是被害者', '影后', '華燈初上', '正港分局', '八尺門的辯護人',
@@ -20,11 +19,11 @@ const pipeline = [
 ]
 
 const evolutionSteps = [
-  ['01', '單一節目追蹤', '最初需求是觀察公司自家一檔新節目上架 Netflix 後的每日排行，並製作每週行銷會議可使用的折線圖。', `${evolutionImageBase}evolution-single-show.png`],
-  ['02', '加入台劇比較', '單一節目走勢無法客觀判斷表現，因此我與主管討論後，加入其他台灣節目的排行走勢作為比較基準。', `${evolutionImageBase}evolution-taiwan-comparison.png`],
-  ['03', '擴展到年度週榜', '不同作品會受到同時期競爭環境影響，因此我開始蒐集全年度週榜資料，建立積分機制與年度收視排行榜。', `${evolutionImageBase}evolution-annual-ranking.png`],
-  ['04', '建立互動儀表板', 'Excel 適合整理資料，但互動性不足，因此我使用 Claude Code 協助實作 React 儀表板，讓資料能被更直覺地探索。', `${evolutionImageBase}evolution-dashboard-iteration.png`],
-] as const
+  ['01', '單一節目追蹤', '最初需求是觀察公司自家一檔新節目上架 Netflix 後的每日排行，並製作每週行銷會議可使用的折線圖。'],
+  ['02', '加入台劇比較', '單一節目走勢無法客觀判斷表現，因此我與主管討論後，加入其他台灣節目的排行走勢作為比較基準。'],
+  ['03', '擴展到年度週榜', '不同作品會受到同時期競爭環境影響，因此我開始蒐集全年度週榜資料，建立積分機制與年度收視排行榜。'],
+  ['04', '建立互動儀表板', 'Excel 適合整理資料，但互動性不足，因此我使用 Claude Code 協助實作 React 儀表板，讓資料能被更直覺地探索。'],
+]
 
 const crawlerChallenges = [
   ['日期篩選與滾動載入', 'Facebook 預設從最新貼文開始載入，需要透過日期篩選與滾動操作才能回到歷史資料。一次滾動過多也可能讓頁面狀態改變，因此我改成分段抓取、定期刷新與調整日期篩選。'],
@@ -76,7 +75,7 @@ function App() {
 
     <section className="container section twoCol"><article className="card wide"><p className="sectionLabel">Problem</p><h2>公開資料存在，但無法直接分析</h2><p>因為 Netflix 並不會留下每日排行紀錄，所以必須另尋數據來源。我在 Facebook 找到專門紀錄排行的粉絲專頁，該頁面長期發布 Netflix Taiwan 的每日排行資訊，但這些資料分散在社群貼文中，沒有結構化歷史資料庫。這使得使用者很難回顧不同年份、類型或台劇作品的排名變化。</p><p><strong>原始資料雖然公開，但公開不等於可分析。</strong> 這個專案的核心問題，是如何把散落在社群平台上的非結構化文字資料，轉換成可以查詢、比較與視覺化的資料產品。</p></article><article className="card"><p className="sectionLabel">Project Goal</p><h2>建立可重複更新的排行資料流程</h2><p>此專案目標不是只做一次性的視覺化頁面，而是建立一套能持續更新的資料流程，讓 Netflix 台灣排行資料能從 Facebook 貼文轉換為可查詢、可比較、可維護的資料資產。</p></article></section>
 
-    <section className="section panel"><div className="container"><p className="sectionLabel">Problem Evolution</p><h2>從單一節目追蹤，到市場競爭脈絡分析</h2><p className="sectionIntro">這個專案不是一開始就規劃成完整儀表板，而是在實際使用與討論中，一步步從單一節目追蹤擴展成市場觀察工具。</p><div className="evolutionGrid">{evolutionSteps.map(([no, title, desc, imageUrl]) => <article className="card evolutionCard" key={title}><div className="evolutionImageFrame"><img src={imageUrl} alt={`${title} 截圖`} loading="lazy" /><span>請上傳 {title} 截圖</span></div><strong className="number">{no}</strong><h3>{title}</h3><p>{desc}</p></article>)}</div></div></section>
+    <section className="section panel"><div className="container"><p className="sectionLabel">Problem Evolution</p><h2>從單一節目追蹤，到市場競爭脈絡分析</h2><p className="sectionIntro">這個專案不是一開始就規劃成完整儀表板，而是在實際使用與討論中，一步步從單一節目追蹤擴展成市場觀察工具。</p><div className="decisionGrid">{evolutionSteps.map(([no, title, desc]) => <article className="card" key={title}><strong className="number">{no}</strong><h3>{title}</h3><p>{desc}</p></article>)}</div></div></section>
 
     <section className="container section twoCol"><article className="card"><p className="sectionLabel">From Excel to Dashboard</p><h2>讓資料不只被整理，也能被探索</h2><p>第一版分析主要在 Excel 中完成：我蒐集全年度週榜資料，建立「排名轉積分」的計算方式，並用樞紐分析製作年度排行榜。</p><p>但在使用過程中，我發現 Excel 適合資料整理與初步分析，卻不適合讓團隊快速切換年份、類型、節目或台劇比較視角。因此我開始使用 Claude Code 協助建立互動式儀表板，並與 AI 一起討論不同資料問題適合使用哪些圖表呈現。</p></article><article className="card"><p className="sectionLabel">Impact</p><h2>從貼文回顧變成資料探索</h2><p>這個專案將原本需要逐篇翻找 Facebook 貼文的排行資料，轉換為可依年份、週次、類型與節目查詢的互動式工具，降低歷史資料回溯成本，並讓台劇與不同影視類型的趨勢比較成為可能。</p></article></section>
 
