@@ -117,7 +117,7 @@ function App() {
     <section className="hero"><div className="wordCloud" aria-hidden="true">{wordCloud.map((title, index) => <span key={title} className={`word word${index + 1}`}>{title}</span>)}</div><div className="container heroGrid"><div>
       <p className="eyebrow heroEyebrow">吳景富 個人專案 作品集網頁<br />DATA PIPELINE · VISUALIZATION · PRODUCT THINKING</p>
       <h1>Netflix 台灣影視排行資料互動儀表板</h1>
-      <p className="lead">我建立了一套端對端資料流程，將網路上 Facebook 專頁貼文整理的 Netflix Taiwan 每日排行資料，整理為 Excel 本地資料庫、轉換為 JSON，並製作成 React 互動式儀表板，用於分析台灣串流影視趨勢。</p>
+      <p className="lead">我建立了一套資料流程，將網路上 Facebook 專頁貼文整理的 Netflix Taiwan 每日排行資料，整理為 Excel 本地資料庫、轉換為 JSON，並製作成 React 互動式儀表板，用於分析台灣串流影視趨勢。</p>
       <div className="actions"><a className="btn primary" href={links.demo} target="_blank" rel="noreferrer">View Live Demo ↗</a><a className="btn secondary" href={links.github} target="_blank" rel="noreferrer">GitHub Repo ↗</a></div>
     </div><aside className="snapshot"><p className="muted">Project Snapshot</p><h2>2024–2026 的 Netflix 台灣串流排行資料</h2><p className="snapshotDesc">資料期間涵蓋 2024/01/01 至 2026/04/27，包含每日榜單蒐集、週榜彙整與台劇追蹤資料。</p><div className="statsGrid">{stats.map(([value, label]) => <div className="statCard" key={label}><strong>{value}</strong><span>{label}</span></div>)}</div></aside></div></section>
 
