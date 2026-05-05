@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 const stats = [
   ['119 週', '週榜資料'], ['314 部', '收錄節目'], ['80+ 部', '台劇追蹤'],
   ['8 張', 'Excel 工作表'], ['3 個', '儀表板頁籤'], ['9+ 種', '篩選維度'],
@@ -32,7 +34,7 @@ const evolutionSteps = [
   ['01', '單一節目追蹤', '最初需求是觀察公司自家一檔新節目上架 Netflix 後的每日排行，並製作每週行銷會議可使用的折線圖。'],
   ['02', '加入台劇比較', '單一節目走勢無法客觀判斷表現，因此我與主管討論後，加入其他台灣節目的排行走勢作為比較基準。'],
   ['03', '擴展到年度週榜', '不同作品會受到同時期競爭環境影響，因此我開始蒐集全年度週榜資料，建立積分機制與年度收視排行榜。'],
-  ['04', '建立互動儀表板', 'Excel 適合整理資料，但互動性不足，因此我使用 Claude Code 協助實作 React 儀表板，讓資料能被更直覺地探索。'],
+  ['04', '建立互動儀表板', 'Excel 適合資料整理，但互動性不足，因此我使用 Claude Code 協助實作 React 儀表板，讓資料能被更直覺地探索。'],
 ]
 
 const crawlerChallenges = [
@@ -50,10 +52,50 @@ const cleaningRules = [
 ]
 
 const screens = [
-  ['Overall Rankings', '總排行榜：跨時間尺度的排行分析', `${imageBase}netflix-dashboard-overall-detail.png`, '支援週榜 / 日榜切換，並可依年份、季度、類型與 Netflix Original 狀態篩選。右側節目詳情面板讓使用者快速查看單一作品的最高名次、平均名次、上榜週數與累積積分。', ['Top 20 積分排行', '年份 / 季度 / 類型篩選', '單一節目詳細查詢']],
-  ['Weekly Snapshot', '週次快覽：把單週榜單轉成可回溯資料', `${imageBase}netflix-dashboard-weekly-browse.png`, '使用者能回到特定月份與週次查看當週 Top 10 榜單，補上 Facebook 貼文難以回溯的問題，讓歷史排行資料能以結構化方式被查詢。', ['月份 / 週次切換', '單週 Top 10 榜單', '類型分布摘要']],
-  ['Genre Analysis', '類型分析：觀察不同影視類型的消長', `${imageBase}netflix-dashboard-genre-flow.png`, '使用圓餅圖呈現類型占比，並用河流圖呈現不同類型在時間軸上的消長，從單一節目排名推進到整體市場趨勢觀察。', ['類型占比圓餅圖', '週榜類型河流圖', '趨勢區間縮放']],
-  ['Taiwan Drama Analysis', '台劇分析：用生命週期比較播出策略', `${imageBase}netflix-dashboard-taiwan-drama.png`, '以「上架後第 N 天」作為共同 X 軸，讓不同上架日期的作品可以被放在同一生命週期基準下比較，適合分析週播、一次上架與拆分上架策略差異。', ['台劇積分排行', '最多 10 部作品比較', '上架後天數走勢圖']],
+  [
+    'Overall Rankings',
+    '總排行榜：跨時間尺度的排行分析',
+    `${imageBase}netflix-dashboard-overall-detail.png`,
+    '這個畫面負責回答「哪些作品在不同時間範圍內表現最好」，把週榜與日榜資料轉成可比較的排行結果。',
+    [
+      ['Top 20 積分排行', '將 Top 10 名次轉換成 10–1 分，讓不同週次、不同作品可以用同一套標準比較，而不是只看某一天的單點排名。'],
+      ['年份 / 季度 / 類型篩選', '使用者可以依年份、季度、月份、類型與 Netflix Original 狀態縮小分析範圍，快速切換不同市場情境。'],
+      ['單一節目詳細查詢', '點選作品後，右側會呈現最高名次、平均名次、上榜週數與累積積分，讓單一作品的表現不只停留在「有沒有上榜」。'],
+    ],
+  ],
+  [
+    'Weekly Snapshot',
+    '週次快覽：把單週榜單轉成可回溯資料',
+    `${imageBase}netflix-dashboard-weekly-browse.png`,
+    '這個畫面負責回答「某一週 Netflix Taiwan 榜單長什麼樣」，降低翻找 Facebook 歷史貼文的成本。',
+    [
+      ['月份 / 週次切換', '使用者可以回到指定月份與週次，不需要逐篇翻社群貼文，也能快速查看當週排行。'],
+      ['單週 Top 10 榜單', '保留當週前十名的排序脈絡，適合回看特定作品上榜時面對哪些競爭對手。'],
+      ['類型分布摘要', '把單週榜單轉成類型概況，讓使用者快速判斷該週是台劇、韓劇、動畫或其他類型較強。'],
+    ],
+  ],
+  [
+    'Genre Analysis',
+    '類型分析：觀察不同影視類型的消長',
+    `${imageBase}netflix-dashboard-genre-flow.png`,
+    '這個畫面負責回答「不同類型在 Netflix Taiwan 榜單中的聲量如何變化」，從單一節目推進到市場趨勢。',
+    [
+      ['類型占比圓餅圖', '用整體占比快速看出哪幾種影視類型在選定期間內最常出現在榜單。'],
+      ['週榜類型河流圖', '把類型變化放在時間軸上觀察，能看出韓劇、台劇、日劇、動畫等類型在不同週期的消長。'],
+      ['趨勢區間縮放', '使用者可以聚焦特定時間區間，避免長時間資料把短期變化壓扁成一條毫無靈魂的線。'],
+    ],
+  ],
+  [
+    'Taiwan Drama Analysis',
+    '台劇分析：用生命週期比較播出策略',
+    `${imageBase}netflix-dashboard-taiwan-drama.png`,
+    '這個畫面負責回答「不同台劇上架後的表現如何比較」，避免被不同上架日期干擾。',
+    [
+      ['台劇積分排行', '先用累積積分排序台劇整體表現，快速辨識哪些作品在 Netflix Taiwan 榜單中最有延續力。'],
+      ['最多 10 部作品比較', '可以同時選擇多部台劇放在同一張圖上比較，適合觀察不同作品的熱度維持能力。'],
+      ['上架後天數走勢圖', '不使用絕對日期，而是改用「上架後第 N 天」作為共同 X 軸，讓週播、一次上架與拆分上架的作品能放在同一生命週期基準下比較。'],
+    ],
+  ],
 ] as const
 
 const decisions = [
@@ -73,6 +115,8 @@ const techStack = ['Python', 'Selenium', 'Excel', 'JSON', 'React', 'TypeScript',
 const links = { demo: 'https://jinfer68.github.io/netflix-taiwan-dashboard/', github: 'https://github.com/jinfer68/netflix-taiwan-dashboard' }
 
 function App() {
+  const [activeScreenDetails, setActiveScreenDetails] = useState<Record<number, number>>({})
+
   return <main>
     <section className="hero"><div className="wordCloud" aria-hidden="true">{wordCloud.map((title, index) => <span key={title} className={`word word${index + 1}`}>{title}</span>)}</div><div className="container heroGrid"><div>
       <p className="eyebrow heroEyebrow">吳景富 個人專案 作品集網頁<br />DATA PIPELINE · VISUALIZATION · PRODUCT THINKING</p>
@@ -97,7 +141,11 @@ function App() {
 
     <section className="container section"><p className="sectionLabel">Dashboard Features</p><h2>三個分析視角</h2><div className="featureGrid"><article className="card"><span className="check">✓</span><h3>總排行榜</h3><p>支援週榜 / 日榜模式，並可依年份、季度、月份、週次、類型與 Netflix Original 篩選。</p></article><article className="card"><span className="check">✓</span><h3>類型分析</h3><p>透過圓餅圖與河流圖觀察韓劇、台劇、日劇、動畫、美劇等類型在週榜中的消長。</p></article><article className="card"><span className="check">✓</span><h3>台劇分析</h3><p>以「上架後第 N 天」作為共同基準，比較不同台劇與播出策略的排名走勢。</p></article></div></section>
 
-    <section className="section panel"><div className="container"><p className="sectionLabel">Product Screens</p><h2>儀表板成果展示</h2><p className="sectionIntro">以下四個畫面說明資料如何被轉換成可查詢、可比較、可解讀的產品介面。</p><div className="screens">{screens.map(([label, title, imageUrl, desc, tags], index) => <article className={`screenRow ${index % 2 ? 'reverse' : ''}`} key={title}><a className="screenFrame" href={links.demo} target="_blank" rel="noreferrer"><img src={imageUrl} alt={`${title} 截圖`} loading="lazy" /><span className="imageFallback"><strong>{title}</strong><em>圖片尚未上傳，點擊查看 live demo ↗</em></span></a><div className="screenText"><p className="sectionLabel">{label}</p><h3>{title}</h3><p>{desc}</p><div className="tags">{tags.map(tag => <span key={tag}>{tag}</span>)}</div></div></article>)}</div></div></section>
+    <section className="section panel"><div className="container"><p className="sectionLabel">Product Screens</p><h2>儀表板成果展示</h2><p className="sectionIntro">以下四個畫面說明資料如何被轉換成可查詢、可比較、可解讀的產品介面。</p><div className="screens">{screens.map(([label, title, imageUrl, desc, details], index) => {
+      const activeDetailIndex = activeScreenDetails[index] ?? 0
+      const activeDetail = details[activeDetailIndex]
+      return <article className={`screenRow ${index % 2 ? 'reverse' : ''}`} key={title}><a className="screenFrame" href={links.demo} target="_blank" rel="noreferrer"><img src={imageUrl} alt={`${title} 截圖`} loading="lazy" /><span className="imageFallback"><strong>{title}</strong><em>圖片尚未上傳，點擊查看 live demo ↗</em></span></a><div className="screenText"><p className="sectionLabel">{label}</p><h3>{title}</h3><p className="screenOverview">{desc}</p><div className="tags screenTags" role="tablist" aria-label={`${title} 功能說明`}>{details.map(([tag], detailIndex) => <button key={tag} type="button" className={activeDetailIndex === detailIndex ? 'active' : ''} aria-selected={activeDetailIndex === detailIndex} onClick={() => setActiveScreenDetails(current => ({ ...current, [index]: detailIndex }))}>{tag}</button>)}</div><div className="screenDetail"><strong>{activeDetail[0]}</strong><p>{activeDetail[1]}</p></div></div></article>
+    })}</div></div></section>
 
     <section className="container section"><p className="sectionLabel">Design Decisions</p><h2>不只是畫圖，而是定義資料怎麼被比較</h2><div className="decisionGrid">{decisions.map(([no, title, desc]) => <article className="card" key={title}><strong className="number">{no}</strong><h3>{title}</h3><p>{desc}</p></article>)}</div></section>
 
