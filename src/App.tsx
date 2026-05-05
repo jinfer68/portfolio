@@ -32,11 +32,13 @@ const cleaningRules = [
   ['人工補充節目屬性', '針對爬蟲無法判斷的欄位，例如 Netflix Original、播出方式與集數，保留人工維護流程。'],
 ]
 
+const imageBase = 'https://jinfer68.github.io/portfolio/images/'
+
 const screens = [
-  ['Overall Rankings', '總排行榜：跨時間尺度的排行分析', '支援週榜 / 日榜切換，並可依年份、季度、類型與 Netflix Original 狀態篩選。右側節目詳情面板讓使用者快速查看單一作品的最高名次、平均名次、上榜週數與累積積分。', ['Top 20 積分排行', '年份 / 季度 / 類型篩選', '單一節目詳細查詢']],
-  ['Weekly Snapshot', '週次快覽：把單週榜單轉成可回溯資料', '使用者能回到特定月份與週次查看當週 Top 10 榜單，補上 Facebook 貼文難以回溯的問題，讓歷史排行資料能以結構化方式被查詢。', ['月份 / 週次切換', '單週 Top 10 榜單', '類型分布摘要']],
-  ['Genre Analysis', '類型分析：觀察不同影視類型的消長', '使用圓餅圖呈現類型占比，並用河流圖呈現不同類型在時間軸上的消長，從單一節目排名推進到整體市場趨勢觀察。', ['類型占比圓餅圖', '週榜類型河流圖', '趨勢區間縮放']],
-  ['Taiwan Drama Analysis', '台劇分析：用生命週期比較播出策略', '以「上架後第 N 天」作為共同 X 軸，讓不同上架日期的作品可以被放在同一生命週期基準下比較，適合分析週播、一次上架與拆分上架策略差異。', ['台劇積分排行', '最多 10 部作品比較', '上架後天數走勢圖']],
+  ['Overall Rankings', '總排行榜：跨時間尺度的排行分析', `${imageBase}netflix-dashboard-overall-detail.png`, '支援週榜 / 日榜切換，並可依年份、季度、類型與 Netflix Original 狀態篩選。右側節目詳情面板讓使用者快速查看單一作品的最高名次、平均名次、上榜週數與累積積分。', ['Top 20 積分排行', '年份 / 季度 / 類型篩選', '單一節目詳細查詢']],
+  ['Weekly Snapshot', '週次快覽：把單週榜單轉成可回溯資料', `${imageBase}netflix-dashboard-weekly-browse.png`, '使用者能回到特定月份與週次查看當週 Top 10 榜單，補上 Facebook 貼文難以回溯的問題，讓歷史排行資料能以結構化方式被查詢。', ['月份 / 週次切換', '單週 Top 10 榜單', '類型分布摘要']],
+  ['Genre Analysis', '類型分析：觀察不同影視類型的消長', `${imageBase}netflix-dashboard-genre-flow.png`, '使用圓餅圖呈現類型占比，並用河流圖呈現不同類型在時間軸上的消長，從單一節目排名推進到整體市場趨勢觀察。', ['類型占比圓餅圖', '週榜類型河流圖', '趨勢區間縮放']],
+  ['Taiwan Drama Analysis', '台劇分析：用生命週期比較播出策略', `${imageBase}netflix-dashboard-taiwan-drama.png`, '以「上架後第 N 天」作為共同 X 軸，讓不同上架日期的作品可以被放在同一生命週期基準下比較，適合分析週播、一次上架與拆分上架策略差異。', ['台劇積分排行', '最多 10 部作品比較', '上架後天數走勢圖']],
 ] as const
 
 const decisions = [
@@ -80,7 +82,7 @@ function App() {
 
     <section className="container section"><p className="sectionLabel">Dashboard Features</p><h2>三個分析視角</h2><div className="featureGrid"><article className="card"><span className="check">✓</span><h3>總排行榜</h3><p>支援週榜 / 日榜模式，並可依年份、季度、月份、週次、類型與 Netflix Original 篩選。</p></article><article className="card"><span className="check">✓</span><h3>類型分析</h3><p>透過圓餅圖與河流圖觀察韓劇、台劇、日劇、動畫、美劇等類型在週榜中的消長。</p></article><article className="card"><span className="check">✓</span><h3>台劇分析</h3><p>以「上架後第 N 天」作為共同基準，比較不同台劇與播出策略的排名走勢。</p></article></div></section>
 
-    <section className="section panel"><div className="container"><p className="sectionLabel">Product Screens</p><h2>儀表板成果展示</h2><p className="sectionIntro">以下四個畫面說明資料如何被轉換成可查詢、可比較、可解讀的產品介面。每張卡片皆連到實際 demo；之後可再把截圖檔補進 repo。</p><div className="screens">{screens.map(([label, title, desc, tags], index) => <article className={`screenRow ${index % 2 ? 'reverse' : ''}`} key={title}><a className="screenMock" href={links.demo} target="_blank" rel="noreferrer"><span>{label}</span><strong>{title}</strong><em>Open live demo ↗</em></a><div className="screenText"><p className="sectionLabel">{label}</p><h3>{title}</h3><p>{desc}</p><div className="tags">{tags.map(tag => <span key={tag}>{tag}</span>)}</div></div></article>)}</div></div></section>
+    <section className="section panel"><div className="container"><p className="sectionLabel">Product Screens</p><h2>儀表板成果展示</h2><p className="sectionIntro">以下四個畫面說明資料如何被轉換成可查詢、可比較、可解讀的產品介面。</p><div className="screens">{screens.map(([label, title, imageUrl, desc, tags], index) => <article className={`screenRow ${index % 2 ? 'reverse' : ''}`} key={title}><a className="screenFrame" href={links.demo} target="_blank" rel="noreferrer"><img src={imageUrl} alt={`${title} 截圖`} loading="lazy" /><span className="imageFallback"><strong>{title}</strong><em>圖片尚未上傳，點擊查看 live demo ↗</em></span></a><div className="screenText"><p className="sectionLabel">{label}</p><h3>{title}</h3><p>{desc}</p><div className="tags">{tags.map(tag => <span key={tag}>{tag}</span>)}</div></div></article>)}</div></div></section>
 
     <section className="container section"><p className="sectionLabel">Design Decisions</p><h2>不只是畫圖，而是定義資料怎麼被比較</h2><div className="decisionGrid">{decisions.map(([no, title, desc]) => <article className="card" key={title}><strong className="number">{no}</strong><h3>{title}</h3><p>{desc}</p></article>)}</div></section>
 
