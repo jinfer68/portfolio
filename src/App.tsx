@@ -11,6 +11,14 @@ const pipeline = [
   ['📈', 'React 儀表板', '以互動式圖表呈現總排行、類型趨勢與台劇表現比較。'],
 ]
 
+const cleaningRules = [
+  ['節目名稱正規化', '處理縮寫、書名號、季數格式與不同貼文中的命名差異，避免同一作品被拆成多筆資料。'],
+  ['類型標準化', '將貼文中的原始類型文字統一映射為固定分類，讓類型統計與篩選可以穩定運作。'],
+  ['日期與週次整理', '將貼文中的時間資訊整理成可排序、可篩選、可聚合的日期與週次欄位。'],
+  ['重複資料檢查', '以日期、週次與節目名稱作為檢查依據，避免同一週榜或日榜資料重複寫入。'],
+  ['人工補充節目屬性', '針對爬蟲無法判斷的欄位，例如 Netflix Original、播出方式與集數，保留人工維護流程。'],
+]
+
 const screens = [
   ['Overall Rankings', '總排行榜：跨時間尺度的排行分析', '支援週榜 / 日榜切換，並可依年份、季度、類型與 Netflix Original 狀態篩選。右側節目詳情面板讓使用者快速查看單一作品的最高名次、平均名次、上榜週數與累積積分。', ['Top 20 積分排行', '年份 / 季度 / 類型篩選', '單一節目詳細查詢']],
   ['Weekly Snapshot', '週次快覽：把單週榜單轉成可回溯資料', '使用者能回到特定月份與週次查看當週 Top 10 榜單，補上 Facebook 貼文難以回溯的問題，讓歷史排行資料能以結構化方式被查詢。', ['月份 / 週次切換', '單週 Top 10 榜單', '類型分布摘要']],
@@ -22,6 +30,12 @@ const decisions = [
   ['01', '用 Excel 作為輕量資料庫', '此專案需要人工補充節目屬性與播出方式，因此選擇 Excel 作為可維護、可人工校正的本地資料庫，而不是一開始就導入較重的 SQL 架構。'],
   ['02', '將排名轉換成積分', '將 Top 10 排名轉成 10–1 分，讓不同週次與不同時間範圍的節目可以被橫向比較。'],
   ['03', '用上架後天數比較台劇', '不同作品上架日期不同，因此台劇走勢圖不使用絕對日期，而是以生命週期視角比較表現。'],
+]
+
+const impactItems = [
+  ['降低回溯成本', '將原本需要逐篇翻找 Facebook 貼文的排行資料，轉換為可依年份、月份、週次查詢的資料工具。'],
+  ['提升比較能力', '透過積分制與篩選器，讓不同節目、類型與時間區間可以被放在同一套標準下比較。'],
+  ['建立可維護流程', '把爬蟲、自動轉換、人工校正與前端展示拆成清楚步驟，讓資料後續能持續更新。'],
 ]
 
 const techStack = ['Python', 'Selenium', 'Excel', 'JSON', 'React', 'TypeScript', 'Vite', 'Recharts', 'ECharts']
@@ -36,9 +50,13 @@ function App() {
       <div className="actions"><a className="btn primary" href={links.demo} target="_blank" rel="noreferrer">View Live Demo ↗</a><a className="btn secondary" href={links.github} target="_blank" rel="noreferrer">GitHub Repo ↗</a></div>
     </div><aside className="snapshot"><p className="muted">Project Snapshot</p><h2>119 週的台灣串流排行資料</h2><div className="statsGrid">{stats.map(([label, value]) => <div className="statCard" key={label}><strong>{value}</strong><span>{label}</span></div>)}</div></aside></div></section>
 
-    <section className="container section twoCol"><article className="card wide"><p className="sectionLabel">Problem</p><h2>公開資料存在，但無法直接分析</h2><p>Netflix Taiwan 會透過 Facebook 貼文發布排行資訊，但這些資料分散在社群貼文中，格式不固定，也沒有結構化歷史資料庫。這使得使用者很難回顧不同年份、類型或台劇作品的排名變化。</p><p>因此，我將這些非結構化貼文轉換為可維護的 Excel 資料庫與前端 JSON，最後透過儀表板呈現可互動分析的影視趨勢。</p></article><article className="card accent"><span className="bigIcon">🧠</span><p>Core Value</p><h3>把不可查詢的社群資料，變成可探索的資料產品。</h3></article></section>
+    <section className="container section twoCol"><article className="card wide"><p className="sectionLabel">Problem</p><h2>公開資料存在，但無法直接分析</h2><p>Netflix Taiwan 會透過 Facebook 貼文發布排行資訊，但這些資料分散在社群貼文中，格式不固定，也沒有結構化歷史資料庫。這使得使用者很難回顧不同年份、類型或台劇作品的排名變化。</p><p><strong>原始資料雖然公開，但公開不等於可分析。</strong> 這個專案的核心問題，是如何把散落在社群平台上的非結構化文字資料，轉換成可以查詢、比較與視覺化的資料產品。</p></article><article className="card accent"><span className="bigIcon">🧠</span><p>Core Value</p><h3>把不可查詢的社群資料，變成可探索的資料產品。</h3></article></section>
+
+    <section className="container section twoCol"><article className="card"><p className="sectionLabel">Project Goal</p><h2>建立可重複更新的排行資料流程</h2><p>此專案目標不是只做一次性的視覺化頁面，而是建立一套能持續更新的資料流程，讓 Netflix 台灣排行資料能從 Facebook 貼文轉換為可查詢、可比較、可維護的資料資產。</p><p>我希望使用者可以用年份、週次、類型、節目名稱與台劇播出策略等角度探索資料，而不是只能被動查看單週排行。</p></article><article className="card"><p className="sectionLabel">Impact</p><h2>從貼文回顧變成資料探索</h2><p>這個專案將原本需要逐篇翻找 Facebook 貼文的排行資料，轉換為可依年份、週次、類型與節目查詢的互動式工具，降低歷史資料回溯成本，並讓台劇與不同影視類型的趨勢比較成為可能。</p></article></section>
 
     <section className="section panel"><div className="container"><p className="sectionLabel">System Architecture</p><h2>從 Facebook 貼文到互動式儀表板</h2><p className="sectionIntro">我將自動化資料蒐集與人工資料校正分離，讓整個流程兼顧效率與資料品質。</p><div className="pipeline">{pipeline.map(([icon, title, desc], index) => <article className="pipeCard" key={title}><span className="pipeIcon">{icon}</span><h3>{title}</h3><p>{desc}</p>{index < pipeline.length - 1 && <span className="arrow">→</span>}</article>)}</div></div></section>
+
+    <section className="container section"><p className="sectionLabel">Data Cleaning</p><h2>資料清理是這個專案能不能可信的核心</h2><p className="sectionIntro">Facebook 貼文不是乾淨資料表。要讓資料能被分析，必須先處理名稱、類型、日期、重複資料與人工屬性補充等問題。資料如果髒，圖表再漂亮也只是高級裝飾品。</p><div className="featureGrid">{cleaningRules.map(([title, desc]) => <article className="card" key={title}><span className="check">✓</span><h3>{title}</h3><p>{desc}</p></article>)}</div></section>
 
     <section className="container section"><p className="sectionLabel">Dashboard Features</p><h2>三個分析視角</h2><div className="featureGrid"><article className="card"><span className="check">✓</span><h3>總排行榜</h3><p>支援週榜 / 日榜模式，並可依年份、季度、月份、週次、類型與 Netflix Original 篩選。</p></article><article className="card"><span className="check">✓</span><h3>類型分析</h3><p>透過圓餅圖與河流圖觀察韓劇、台劇、日劇、動畫、美劇等類型在週榜中的消長。</p></article><article className="card"><span className="check">✓</span><h3>台劇分析</h3><p>以「上架後第 N 天」作為共同基準，比較不同台劇與播出策略的排名走勢。</p></article></div></section>
 
@@ -46,7 +64,9 @@ function App() {
 
     <section className="container section"><p className="sectionLabel">Design Decisions</p><h2>不只是畫圖，而是定義資料怎麼被比較</h2><div className="decisionGrid">{decisions.map(([no, title, desc]) => <article className="card" key={title}><strong className="number">{no}</strong><h3>{title}</h3><p>{desc}</p></article>)}</div></section>
 
-    <section className="section panel"><div className="container twoCol"><article className="card"><p className="sectionLabel">My Role</p><h2>我負責的不只是實作，而是資料產品設計</h2><p>我負責資料來源判斷、pipeline 規劃、Excel schema 設計、資料清理規則、儀表板需求定義、結果驗證與最終整合。</p><p>我使用 Claude Code 作為 AI coding assistant 加速實作，但由我主導資料結構、分析邏輯與產品判斷。</p></article><article className="card"><p className="sectionLabel">Tech Stack</p><h2>資料管線與前端視覺化</h2><div className="tags large">{techStack.map(tech => <span key={tech}>{tech}</span>)}</div><div className="nextBox"><h3>下一步改善</h3><ul><li>加入電影排行榜分析</li><li>整合 GitHub Actions 進行每週自動更新</li><li>增加 CSV 匯出功能</li><li>改善行動版 RWD</li></ul></div></article></div></section>
+    <section className="section panel"><div className="container"><p className="sectionLabel">Impact</p><h2>功能背後對應到的實際價值</h2><div className="featureGrid">{impactItems.map(([title, desc]) => <article className="card" key={title}><span className="check">✓</span><h3>{title}</h3><p>{desc}</p></article>)}</div></div></section>
+
+    <section className="section panel"><div className="container twoCol"><article className="card"><p className="sectionLabel">My Role</p><h2>我負責的不只是實作，而是資料產品設計</h2><p>我負責資料來源判斷、pipeline 規劃、Excel schema 設計、資料清理規則、儀表板需求定義、結果驗證與最終整合。</p><p>我使用 Claude Code 作為 AI coding assistant 加速實作，但由我主導資料結構、分析邏輯與產品判斷。</p></article><article className="card"><p className="sectionLabel">Tech Stack</p><h2>資料管線與前端視覺化</h2><div className="tags large">{techStack.map(tech => <span key={tech}>{tech}</span>)}</div><div className="nextBox"><h3>下一步改善</h3><ul><li>整合 GitHub Actions 進行每週自動更新</li><li>加入電影排行榜分析</li><li>增加 CSV 匯出功能</li><li>改善行動版 RWD</li></ul></div></article></div></section>
 
     <section className="footerCta"><div className="container footerGrid"><div><h2>想看實際成果？</h2><p>Live demo 與 GitHub repo 都已公開。</p></div><div className="actions"><a className="btn primary" href={links.demo} target="_blank" rel="noreferrer">Live Demo ↗</a><a className="btn secondary" href={links.github} target="_blank" rel="noreferrer">GitHub ↗</a></div></div></section>
   </main>
