@@ -54,46 +54,42 @@ const cleaningRules = [
 const screens = [
   [
     'Overall Rankings',
-    '總排行榜：跨時間尺度的排行分析',
-    `${imageBase}netflix-dashboard-overall-detail.png`,
-    '這個畫面負責回答「哪些作品在不同時間範圍內表現最好」，把週榜與日榜資料轉成可比較的排行結果。',
+    '總排行榜：把週榜與日榜轉成可比較的排行結果',
+    [
+      `${imageBase}netflix-dashboard-weekly-browse.png`,
+      `${imageBase}netflix-dashboard-overall-detail.png`,
+    ],
+    '這個主頁面負責回答「哪些作品在不同時間範圍內表現最好」。我將週榜與日榜資料轉換成積分與排行結果，讓使用者可以依年份、季度、月份、週次、類型與 Netflix Original 狀態篩選，快速比較不同作品在指定期間內的表現。',
     [
       ['Top 20 積分排行', '將 Top 10 名次轉換成 10–1 分，讓不同週次、不同作品可以用同一套標準比較，而不是只看某一天的單點排名。'],
+      ['週次快覽', '週次快覽讓使用者回到特定月份與週次，直接查看當週 Top 10 榜單與類型分布，不需要逐篇翻找 Facebook 歷史貼文。這個設計把原本分散在貼文中的單週榜單，轉換成可以快速回溯的查詢介面。'],
+      ['節目詳情', '節目詳情用於查看單一作品的最高名次、平均名次、上榜週數與累積積分。這讓作品表現不只停留在「有沒有上榜」，而是能進一步判斷它的排名穩定度、持續力與整體競爭表現。'],
       ['年份 / 季度 / 類型篩選', '使用者可以依年份、季度、月份、類型與 Netflix Original 狀態縮小分析範圍，快速切換不同市場情境。'],
-      ['單一節目詳細查詢', '點選作品後，右側會呈現最高名次、平均名次、上榜週數與累積積分，讓單一作品的表現不只停留在「有沒有上榜」。'],
-    ],
-  ],
-  [
-    'Weekly Snapshot',
-    '週次快覽：把單週榜單轉成可回溯資料',
-    `${imageBase}netflix-dashboard-weekly-browse.png`,
-    '這個畫面負責回答「某一週 Netflix Taiwan 榜單長什麼樣」，降低翻找 Facebook 歷史貼文的成本。',
-    [
-      ['月份 / 週次切換', '使用者可以回到指定月份與週次，不需要逐篇翻社群貼文，也能快速查看當週排行。'],
-      ['單週 Top 10 榜單', '保留當週前十名的排序脈絡，適合回看特定作品上榜時面對哪些競爭對手。'],
-      ['類型分布摘要', '把單週榜單轉成類型概況，讓使用者快速判斷該週是台劇、韓劇、動畫或其他類型較強。'],
     ],
   ],
   [
     'Genre Analysis',
-    '類型分析：觀察不同影視類型的消長',
-    `${imageBase}netflix-dashboard-genre-flow.png`,
-    '這個畫面負責回答「不同類型在 Netflix Taiwan 榜單中的聲量如何變化」，從單一節目推進到市場趨勢。',
+    '類型分析：比較不同影視類型在期間內的聲量變化',
+    [`${imageBase}netflix-dashboard-genre-flow.png`],
+    '這個頁面負責回答「不同類型在 Netflix Taiwan 榜單中的聲量如何變化」。除了用圓餅圖觀察整體類型占比，也加入類型期間數量分析，讓使用者可以看到各類型在選定期間內的出現次數、最高與最低數量，以及平均表現。',
     [
       ['類型占比圓餅圖', '用整體占比快速看出哪幾種影視類型在選定期間內最常出現在榜單。'],
+      ['類型期間數量分析', '比較每一種類型在不同時間區間中的上榜頻率，包含最多、最少與平均數量。這能避免只看單週波動，而是用更完整的期間資料判斷哪些類型長期穩定、哪些類型只是短期爆發。'],
       ['週榜類型河流圖', '把類型變化放在時間軸上觀察，能看出韓劇、台劇、日劇、動畫等類型在不同週期的消長。'],
       ['趨勢區間縮放', '使用者可以聚焦特定時間區間，避免長時間資料把短期變化壓扁成一條毫無靈魂的線。'],
     ],
   ],
   [
     'Taiwan Drama Analysis',
-    '台劇分析：用生命週期比較播出策略',
-    `${imageBase}netflix-dashboard-taiwan-drama.png`,
-    '這個畫面負責回答「不同台劇上架後的表現如何比較」，避免被不同上架日期干擾。',
+    '台劇分析：依上架方式比較作品生命週期走勢',
+    [`${imageBase}netflix-dashboard-taiwan-drama.png`],
+    '這個頁面負責回答「不同台劇上架後的表現如何比較」。我將台劇分成週次上架與一次上架兩種篩選條件，因為兩種發行方式會造成很大的走勢差異：週次上架通常會因新集數釋出而產生多次排名波動，一次上架則更容易呈現集中爆發後逐漸下降的走勢。',
     [
       ['台劇積分排行', '先用累積積分排序台劇整體表現，快速辨識哪些作品在 Netflix Taiwan 榜單中最有延續力。'],
+      ['週次上架 / 一次上架篩選', '將台劇分成週次上架與一次上架兩種條件，避免把不同發行策略硬塞進同一種解讀邏輯。'],
+      ['上架日標記', '週次上架的作品會針對上架日進行標記，讓使用者能對照排名變化是否受到新集數釋出的影響。'],
+      ['上架後天數走勢圖', '不使用絕對日期，而是改用「上架後第 N 天」作為共同 X 軸，讓不同作品能放在同一生命週期基準下比較。'],
       ['最多 10 部作品比較', '可以同時選擇多部台劇放在同一張圖上比較，適合觀察不同作品的熱度維持能力。'],
-      ['上架後天數走勢圖', '不使用絕對日期，而是改用「上架後第 N 天」作為共同 X 軸，讓週播、一次上架與拆分上架的作品能放在同一生命週期基準下比較。'],
     ],
   ],
 ] as const
@@ -139,21 +135,21 @@ function App() {
 
     <section className="container section"><p className="sectionLabel">Data Cleaning</p><h2>資料清理是這個專案能不能可信的核心</h2><p className="sectionIntro">Facebook 貼文不是乾淨資料表。要讓資料能被分析，必須先處理名稱、類型、日期、重複資料與人工屬性補充等問題。資料如果髒，圖表再漂亮也只是高級裝飾品。</p><div className="featureGrid">{cleaningRules.map(([title, desc]) => <article className="card" key={title}><span className="check">✓</span><h3>{title}</h3><p>{desc}</p></article>)}</div></section>
 
-    <section className="container section"><p className="sectionLabel">Dashboard Features</p><h2>三個分析視角</h2><div className="featureGrid"><article className="card"><span className="check">✓</span><h3>總排行榜</h3><p>支援週榜 / 日榜模式，並可依年份、季度、月份、週次、類型與 Netflix Original 篩選。</p></article><article className="card"><span className="check">✓</span><h3>類型分析</h3><p>透過圓餅圖與河流圖觀察韓劇、台劇、日劇、動畫、美劇等類型在週榜中的消長。</p></article><article className="card"><span className="check">✓</span><h3>台劇分析</h3><p>以「上架後第 N 天」作為共同基準，比較不同台劇與播出策略的排名走勢。</p></article></div></section>
+    <section className="container section"><p className="sectionLabel">Dashboard Features</p><h2>三個分析視角</h2><div className="featureGrid"><article className="card"><span className="check">✓</span><h3>總排行榜</h3><p>支援週榜 / 日榜模式，並可依年份、季度、月份、週次、類型與 Netflix Original 篩選；週次快覽與節目詳情作為同一主頁面中的兩個子視角。</p></article><article className="card"><span className="check">✓</span><h3>類型分析</h3><p>透過圓餅圖、類型期間數量分析與河流圖，觀察韓劇、台劇、日劇、動畫、美劇等類型在不同期間中的消長。</p></article><article className="card"><span className="check">✓</span><h3>台劇分析</h3><p>以「上架後第 N 天」作為共同基準，並區分週次上架與一次上架，避免不同播出策略被錯誤比較。</p></article></div></section>
 
-    <section className="section panel"><div className="container"><p className="sectionLabel">Product Screens</p><h2>儀表板成果展示</h2><p className="sectionIntro">以下四個畫面說明資料如何被轉換成可查詢、可比較、可解讀的產品介面。</p><div className="screens">{screens.map(([label, title, imageUrl, desc, details], index) => {
+    <section className="section panel"><div className="container"><p className="sectionLabel">Product Screens</p><h2>儀表板成果展示</h2><p className="sectionIntro">以下三個主頁面說明資料如何被轉換成可查詢、可比較、可解讀的產品介面。其中「總排行榜」包含週次快覽與節目詳情兩個子視角，因此使用兩張截圖輔助說明。</p><div className="screens">{screens.map(([label, title, imageUrls, desc, details], index) => {
       const activeDetailIndex = activeScreenDetails[index] ?? 0
       const activeDetail = details[activeDetailIndex]
-      return <article className={`screenRow ${index % 2 ? 'reverse' : ''}`} key={title}><a className="screenFrame" href={links.demo} target="_blank" rel="noreferrer"><img src={imageUrl} alt={`${title} 截圖`} loading="lazy" /><span className="imageFallback"><strong>{title}</strong><em>圖片尚未上傳，點擊查看 live demo ↗</em></span></a><div className="screenText"><p className="sectionLabel">{label}</p><h3>{title}</h3><p className="screenOverview">{desc}</p><div className="tags screenTags" role="tablist" aria-label={`${title} 功能說明`}>{details.map(([tag], detailIndex) => <button key={tag} type="button" className={activeDetailIndex === detailIndex ? 'active' : ''} aria-selected={activeDetailIndex === detailIndex} onClick={() => setActiveScreenDetails(current => ({ ...current, [index]: detailIndex }))}>{tag}</button>)}</div><div className="screenDetail"><strong>{activeDetail[0]}</strong><p>{activeDetail[1]}</p></div></div></article>
+      return <article className={`screenRow ${index % 2 ? 'reverse' : ''}`} key={title}><a className="screenFrame" href={links.demo} target="_blank" rel="noreferrer" style={imageUrls.length > 1 ? { display: 'grid', gap: '12px', padding: '12px' } : undefined}>{imageUrls.map(imageUrl => <img key={imageUrl} src={imageUrl} alt={`${title} 截圖`} loading="lazy" style={imageUrls.length > 1 ? { minHeight: 180, borderRadius: 18 } : undefined} />)}<span className="imageFallback"><strong>{title}</strong><em>圖片尚未上傳，點擊查看 live demo ↗</em></span></a><div className="screenText"><p className="sectionLabel">{label}</p><h3>{title}</h3><p className="screenOverview">{desc}</p><div className="tags screenTags" role="tablist" aria-label={`${title} 功能說明`}>{details.map(([tag], detailIndex) => <button key={tag} type="button" className={activeDetailIndex === detailIndex ? 'active' : ''} aria-selected={activeDetailIndex === detailIndex} onClick={() => setActiveScreenDetails(current => ({ ...current, [index]: detailIndex }))}>{tag}</button>)}</div><div className="screenDetail"><strong>{activeDetail[0]}</strong><p>{activeDetail[1]}</p></div></div></article>
     })}</div></div></section>
 
     <section className="container section"><p className="sectionLabel">Design Decisions</p><h2>不只是畫圖，而是定義資料怎麼被比較</h2><div className="decisionGrid">{decisions.map(([no, title, desc]) => <article className="card" key={title}><strong className="number">{no}</strong><h3>{title}</h3><p>{desc}</p></article>)}</div></section>
 
     <section className="section panel"><div className="container"><p className="sectionLabel">Business Impact</p><h2>從內部行銷素材，延伸為市場觀察工具</h2><p className="sectionIntro">這份資料最初只是為了支援單一節目的每週行銷會議，但最後擴展成一套涵蓋多年份、週榜與日榜的 Netflix 台灣收視資料庫。</p><div className="featureGrid">{impactItems.map(([title, desc]) => <article className="card" key={title}><span className="check">✓</span><h3>{title}</h3><p>{desc}</p></article>)}</div><p className="sectionIntro impactNote">未來，這類資料也有機會協助公司與串流平台討論上架策略，或作為內容製作與宣傳時程規劃的參考。</p></div></section>
 
-    <section className="section panel"><div className="container twoCol"><article className="card"><p className="sectionLabel">My Role</p><h2>我負責的不只是實作，而是資料產品設計</h2><p>我負責資料來源判斷、pipeline 規劃、Excel schema 設計、資料清理規則、儀表板需求定義、結果驗證與最終整合。</p><p>我使用 Claude Code 作為 AI coding assistant 加速實作，但由我主導資料結構、分析邏輯與產品判斷。</p></article><article className="card"><p className="sectionLabel">Tech Stack</p><h2>資料管線與前端視覺化</h2><div className="tags large">{techStack.map(tech => <span key={tech}>{tech}</span>)}</div><div className="nextBox"><h3>下一步改善</h3><ul><li>整合 GitHub Actions 進行每週自動更新</li><li>加入電影排行榜分析</li><li>增加 CSV 匯出功能</li><li>改善行動版 RWD</li></ul></div></article></div></section>
+    <section className="container section twoCol"><article className="card"><p className="sectionLabel">My Role</p><h2>我負責的不只是實作，而是資料產品設計</h2><p>我負責資料來源判斷、pipeline 規劃、Excel schema 設計、資料清理規則、儀表板需求定義、結果驗證與最終整合。</p><p>我使用 Claude Code 作為 AI coding assistant 加速實作，但由我主導資料結構、分析邏輯與產品判斷。</p></article><article className="card"><p className="sectionLabel">Tech Stack</p><h2>使用工具</h2><div className="tags large">{techStack.map(item => <span key={item}>{item}</span>)}</div><div className="nextBox"><strong>Future Improvements</strong><ul><li>整合 GitHub Actions 進行每週自動更新</li><li>加入電影排行榜分析</li><li>增加 CSV 匯出功能</li><li>改善行動版 RWD</li></ul></div></article></section>
 
-    <section className="footerCta"><div className="container footerGrid"><div><h2>想看實際成果？</h2><p>Live demo 與 GitHub repo 都已公開。</p></div><div className="actions"><a className="btn primary" href={links.demo} target="_blank" rel="noreferrer">Live Demo ↗</a><a className="btn secondary" href={links.github} target="_blank" rel="noreferrer">GitHub ↗</a></div></div></section>
+    <footer className="footerCta"><div className="container footerGrid"><div><p className="sectionLabel">Final Output</p><h2>從非結構化貼文，到可互動分析的資料產品</h2><p>這個專案展示我如何把模糊的商業需求拆解成資料流程、分析邏輯與可操作的產品介面。</p></div><div className="actions"><a className="btn primary" href={links.demo} target="_blank" rel="noreferrer">Open Dashboard ↗</a><a className="btn secondary" href={links.github} target="_blank" rel="noreferrer">View Code ↗</a></div></div></footer>
   </main>
 }
 
