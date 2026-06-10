@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const stats = [
   ['119 週', '週榜資料'], ['314 部', '收錄節目'], ['80+ 部', '台劇追蹤'],
@@ -13,6 +13,26 @@ const taiwanBook = {
   cover: `${imageBase}taiwan-book/cover.png`,
   tags: ['資訊設計', '教育內容', 'A5 小書', 'Figma Workflow'],
 }
+
+const taiwanBookStats = [
+  ['20+', 'A5 頁面'],
+  ['6', '歷史章節'],
+  ['8', 'Figma 元件'],
+  ['3', '素材版本'],
+]
+
+const taiwanBookProcess = [
+  ['01', '歷史敘事拆解', '將台灣四百年出口貿易史拆成荷治、清領、日治、戰後加工、近代科技與結尾反思。'],
+  ['02', '資訊圖像轉譯', '把抽象的經濟史脈絡轉成地圖、時間軸、供應鏈、產業卡片與跨頁視覺。'],
+  ['03', '素材清理與重繪', '整理初版、純白版、去字版與透明版，讓頁面可被重新排版、疊合與後續輸出。'],
+  ['04', 'Figma 工作流', '建立頁面模板、時期標籤、資訊卡、時間軸列等元件，並以外掛流程加速 A5 頁面產出。'],
+]
+
+const taiwanBookImages = [
+  [`${imageBase}taiwan-book/toc.png`, '全書目錄與章節架構'],
+  [`${imageBase}taiwan-book/semiconductor-page.png`, '近代科技時期代表頁'],
+  [`${imageBase}taiwan-book/contact-sheet.jpg`, '透明素材 contact sheet'],
+]
 
 const wordCloud = [
   '模仿犯', '此時此刻', '誰是被害者', '影后', '華燈初上', '正港分局', '八尺門的辯護人',
@@ -118,12 +138,110 @@ const techStack = ['Python', 'Selenium', 'Excel', 'JSON', 'React', 'TypeScript',
 const links = { demo: 'https://jinfer68.github.io/netflix-taiwan-dashboard/', github: 'https://github.com/jinfer68/netflix-taiwan-dashboard' }
 
 function App() {
+  const [route, setRoute] = useState(() => window.location.hash.replace(/^#\/?/, '') || 'home')
+
+  useEffect(() => {
+    const syncRoute = () => {
+      setRoute(window.location.hash.replace(/^#\/?/, '') || 'home')
+      window.scrollTo({ top: 0, behavior: 'auto' })
+    }
+    window.addEventListener('hashchange', syncRoute)
+    return () => window.removeEventListener('hashchange', syncRoute)
+  }, [])
+
+  if (route === 'taiwan-book') return <TaiwanBookCase />
+  if (route === 'netflix-dashboard') return <NetflixCase />
+  return <PortfolioHome />
+}
+
+function PortfolioHome() {
+  return <main className="portfolioHome">
+    <section className="homeHero">
+      <div className="container homeGrid">
+        <div>
+          <p className="homeEyebrow">吳景富 · Portfolio</p>
+          <h1>把資料、故事與工具<br />做成能被理解的作品</h1>
+          <p className="homeLead">這裡收錄我從資料整理、視覺化、資訊設計到 AI 協作工作流的個人專案。點進作品後，可以閱讀各自完整的製作脈絡與成果說明。</p>
+        </div>
+        <div className="homePreview" aria-label="Featured project preview">
+          <img src={taiwanBook.cover} alt={`${taiwanBook.title} 封面`} />
+        </div>
+      </div>
+    </section>
+
+    <section className="container homeSection">
+      <div className="homeSectionHeader">
+        <p className="homeEyebrow">Selected Work</p>
+        <h2>作品案例</h2>
+      </div>
+      <div className="homeProjectGrid">
+        <article className="homeProjectCard">
+          <a className="homeProjectImage" href="#/taiwan-book">
+            <img src={taiwanBook.cover} alt={`${taiwanBook.title} 預覽`} />
+          </a>
+          <div className="homeProjectBody">
+            <p className="homeEyebrow">Information Design · AI Workflow · Figma</p>
+            <h3>{taiwanBook.title}</h3>
+            <p>{taiwanBook.summary}</p>
+            <div className="homeTags">{taiwanBook.tags.map(tag => <span key={tag}>{tag}</span>)}</div>
+            <div className="homeActions"><a className="homeBtn" href="#/taiwan-book">閱讀詳細說明</a></div>
+          </div>
+        </article>
+
+        <article className="homeProjectCard">
+          <a className="homeProjectImage" href="#/netflix-dashboard">
+            <img src={`${imageBase}netflix-dashboard-weekly-browse.png`} alt="Netflix 台灣影視排行資料互動儀表板預覽" />
+          </a>
+          <div className="homeProjectBody">
+            <p className="homeEyebrow">Data Pipeline · Visualization · Product Thinking</p>
+            <h3>Netflix 台灣影視排行資料互動儀表板</h3>
+            <p>將 Facebook 非結構化排行貼文整理成 Excel / JSON 資料流程，並製作 React 互動式儀表板，用於分析台灣串流影視趨勢。</p>
+            <div className="homeTags">{techStack.slice(0, 5).map(tag => <span key={tag}>{tag}</span>)}</div>
+            <div className="homeActions"><a className="homeBtn" href="#/netflix-dashboard">閱讀詳細說明</a><a className="homeBtn secondary" href={links.demo} target="_blank" rel="noreferrer">Live Demo</a></div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+}
+
+function TaiwanBookCase() {
+  return <main className="homeCasePage">
+    <nav className="homeCaseNav container"><a href="#/">← 回作品集首頁</a></nav>
+    <section className="homeCaseHero">
+      <div className="container homeCaseGrid">
+        <div>
+          <p className="homeEyebrow">Case Study · Information Design</p>
+          <h1>{taiwanBook.title}</h1>
+          <p className="homeLead">這是一個將歷史、地理、經濟與設計整合在一起的資訊圖像小書。核心問題是：如何讓學生看懂台灣在不同時代被世界需要的方式，以及出口貿易如何改變產業、城市與國際定位。</p>
+          <div className="homeStatGrid">{taiwanBookStats.map(([value, label]) => <div className="homeStat" key={label}><strong>{value}</strong><span>{label}</span></div>)}</div>
+        </div>
+        <figure className="homeBookStack">
+          <img src={taiwanBook.cover} alt="小書封面" />
+          <img src={taiwanBookImages[1][0]} alt="科技時期代表頁" />
+        </figure>
+      </div>
+    </section>
+
+    <section className="container homeSection">
+      <div className="homeSectionHeader">
+        <p className="homeEyebrow">Process</p>
+        <h2>從內容架構到可輸出的設計系統</h2>
+      </div>
+      <div className="homeProcessGrid">{taiwanBookProcess.map(([number, title, text]) => <article className="homeProcessCard" key={title}><span>{number}</span><h3>{title}</h3><p>{text}</p></article>)}</div>
+    </section>
+
+    <section className="container homeImageStory">
+      {taiwanBookImages.map(([src, caption]) => <figure key={src}><img src={src} alt={caption} loading="lazy" /><figcaption>{caption}</figcaption></figure>)}
+    </section>
+  </main>
+}
+
+function NetflixCase() {
   const [activeScreenDetails, setActiveScreenDetails] = useState<Record<number, number>>({})
 
   return <main>
-    <section className="portfolioIntro" id="work"><div className="container"><p className="sectionLabel">Selected Work</p><h1>吳景富作品集</h1><p className="lead">這裡保留原本完整的 Netflix 台灣影視排行資料儀表板案例，並新增台灣四百年資訊圖像小書作為另一個作品入口。</p><div className="portfolioGrid"><article className="portfolioCard featured"><img src={taiwanBook.cover} alt={`${taiwanBook.title} 封面`} /><div><p className="sectionLabel">Information Design · AI Workflow · Figma</p><h2>{taiwanBook.title}</h2><p>{taiwanBook.summary}</p><div className="tags">{taiwanBook.tags.map(tag => <span key={tag}>{tag}</span>)}</div></div></article><article className="portfolioCard"><div><p className="sectionLabel">Data Pipeline · Visualization · Product Thinking</p><h2>Netflix 台灣影視排行資料互動儀表板</h2><p>原本的完整 case study 仍保留在下方，包含專案起源、資料流程、爬蟲挑戰、產品畫面、設計決策與商業影響。</p><div className="actions"><a className="btn primary" href="#netflix-case">閱讀完整介紹</a><a className="btn secondary" href={links.demo} target="_blank" rel="noreferrer">View Live Demo ↗</a></div></div></article></div></div></section>
-
-    <div id="netflix-case" />
+    <nav className="caseNav container"><a href="#/">← 回作品集首頁</a></nav>
     <section className="hero"><div className="wordCloud" aria-hidden="true">{wordCloud.map((title, index) => <span key={title} className={`word word${index + 1}`}>{title}</span>)}</div><div className="container heroGrid"><div>
       <p className="eyebrow heroEyebrow">吳景富 個人專案 作品集網頁<br />DATA PIPELINE · VISUALIZATION · PRODUCT THINKING</p>
       <h1>Netflix 台灣影視排行資料互動儀表板</h1>
