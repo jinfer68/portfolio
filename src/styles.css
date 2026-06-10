@@ -13,6 +13,168 @@ button { font: inherit; }
 main { min-height: 100vh; overflow-x: hidden; }
 
 .container { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+.portfolioHome,.homeCasePage {
+  min-height: 100vh;
+  background: #f6f4ef;
+  color: #1d1d1f;
+  overflow-x: hidden;
+}
+.portfolioHome img,.homeCasePage img { max-width: 100%; }
+.homeHero {
+  min-height: 92vh;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #d8d2c6;
+  background: #f6f4ef;
+}
+.homeGrid,.homeCaseGrid {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) minmax(320px,440px);
+  gap: 56px;
+  align-items: center;
+  padding: 64px 0;
+}
+.homeGrid > div,.homeCaseGrid > div { min-width: 0; }
+.homeEyebrow {
+  margin: 0 0 14px;
+  color: #9b2f23;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.portfolioHome h1,.homeCasePage h1 {
+  margin-bottom: 24px;
+  color: #111;
+  font-size: clamp(44px,7vw,86px);
+  line-height: .98;
+  letter-spacing: 0;
+}
+.portfolioHome h2,.homeCasePage h2 {
+  color: #111;
+  font-size: clamp(30px,4.2vw,54px);
+  line-height: 1.08;
+  letter-spacing: 0;
+}
+.portfolioHome h3,.homeCasePage h3 { color: #111; letter-spacing: 0; }
+.homeLead {
+  max-width: 780px;
+  color: #4b4740;
+  font-size: 19px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+  word-break: break-all;
+}
+.homePreview {
+  overflow: hidden;
+  border: 1px solid #cfc6b8;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 22px 60px rgba(34,26,18,.14);
+  transform: rotate(2deg);
+}
+.homePreview img,.homeProjectImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+.homePreview img { aspect-ratio: 5 / 7; }
+.homeSection { padding: 88px 0; }
+.homeSectionHeader { max-width: 720px; margin-bottom: 30px; }
+.homeProjectGrid { display: grid; gap: 24px; }
+.homeProjectCard {
+  display: grid;
+  grid-template-columns: minmax(260px,420px) minmax(0,1fr);
+  overflow: hidden;
+  border: 1px solid #d8d2c6;
+  border-radius: 8px;
+  background: #fffdf8;
+  box-shadow: 0 18px 48px rgba(34,26,18,.08);
+}
+.homeProjectImage { min-height: 360px; background: #e9e2d4; }
+.homeProjectBody { padding: 38px; }
+.homeProjectBody p,.homeProcessCard p { color: #4b4740; font-size: 17px; line-height: 1.75; }
+.homeTags { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 0; }
+.homeTags span {
+  display: inline-flex;
+  padding: 7px 10px;
+  border: 1px solid #d8d2c6;
+  border-radius: 999px;
+  color: #4b4740;
+  background: #f6f4ef;
+  font-size: 13px;
+  font-weight: 700;
+}
+.homeActions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+.homeBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0 16px;
+  border: 1px solid #1d1d1f;
+  border-radius: 6px;
+  background: #1d1d1f;
+  color: #fff;
+  font-weight: 800;
+}
+.homeBtn.secondary { background: #fffdf8; color: #1d1d1f; }
+.homeCaseNav,.caseNav { padding: 22px 0; }
+.homeCaseNav a,.caseNav a { color: inherit; font-weight: 800; }
+.homeCaseHero { border-bottom: 1px solid #d8d2c6; background: #fffdf8; }
+.homeStatGrid {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 12px;
+  margin-top: 32px;
+}
+.homeStat {
+  padding: 18px;
+  border: 1px solid #d8d2c6;
+  border-radius: 8px;
+  background: #f6f4ef;
+}
+.homeStat strong { display: block; color: #111; font-size: 28px; line-height: 1; }
+.homeStat span { display: block; margin-top: 8px; color: #665f55; font-size: 14px; }
+.homeBookStack { position: relative; min-height: 560px; margin: 0; }
+.homeBookStack img {
+  position: absolute;
+  width: 62%;
+  aspect-ratio: 5 / 7;
+  object-fit: cover;
+  object-position: top;
+  border: 1px solid #cfc6b8;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 18px 48px rgba(34,26,18,.16);
+}
+.homeBookStack img:first-child { top: 0; left: 0; z-index: 2; transform: rotate(-4deg); }
+.homeBookStack img:last-child { right: 0; bottom: 0; transform: rotate(4deg); }
+.homeProcessGrid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+.homeProcessCard {
+  padding: 24px;
+  border: 1px solid #d8d2c6;
+  border-radius: 8px;
+  background: #fffdf8;
+}
+.homeProcessCard span { display: inline-flex; margin-bottom: 20px; color: #9b2f23; font-size: 30px; font-weight: 900; }
+.homeImageStory {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.2fr;
+  gap: 18px;
+  padding-bottom: 88px;
+}
+.homeImageStory figure {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid #d8d2c6;
+  border-radius: 8px;
+  background: #fffdf8;
+}
+.homeImageStory img { width: 100%; height: 520px; object-fit: cover; object-position: top; }
+.homeImageStory figcaption { padding: 14px 16px; color: #4b4740; font-weight: 800; }
+.caseNav { background: #090912; color: #f4f4f5; }
 .portfolioIntro { padding: 88px 0; border-bottom: 1px solid #27272a; background: #0f0f17; }
 .portfolioIntro h1 { max-width: 760px; }
 .portfolioIntro .lead { max-width: 780px; }
@@ -124,6 +286,12 @@ h3 { color: #fff; font-size: 22px; line-height: 1.25; }
 
 @media (max-width: 980px) {
   .heroGrid,.twoCol,.screenRow,.dataCompare { grid-template-columns: 1fr; }
+  .homeGrid,.homeCaseGrid,.homeProjectCard { grid-template-columns: 1fr; }
+  .homePreview { max-width: 420px; transform: none; }
+  .homeStatGrid,.homeProcessGrid { grid-template-columns: repeat(2,1fr); }
+  .homeBookStack { min-height: 460px; max-width: 520px; }
+  .homeImageStory { grid-template-columns: 1fr; }
+  .homeImageStory img { height: auto; max-height: 680px; }
   .portfolioGrid,.portfolioCard.featured { grid-template-columns: 1fr; }
   .screenRow.reverse .screenFrame { order: initial; }
   .pipeline,.featureGrid,.decisionGrid,.originFlow,.timeline,.challengeGrid { grid-template-columns: 1fr; }
@@ -136,6 +304,16 @@ h3 { color: #fff; font-size: 22px; line-height: 1.25; }
 
 @media (max-width: 620px) {
   .container { width: min(100% - 28px,1180px); }
+  .homeGrid,.homeCaseGrid { padding: 54px 0; gap: 30px; }
+  .homeSection { padding: 62px 0; }
+  .homeProjectBody { padding: 26px; }
+  .homeProjectImage { min-height: 280px; }
+  .homeStatGrid,.homeProcessGrid { grid-template-columns: 1fr; }
+  .homeBookStack { min-height: 380px; }
+  .homeBookStack img { width: 68%; }
+  .portfolioHome h1,.homeCasePage h1 { font-size: 36px; line-height: 1.08; overflow-wrap: anywhere; word-break: break-all; }
+  .portfolioHome h2,.homeCasePage h2 { font-size: 30px; overflow-wrap: anywhere; word-break: break-all; }
+  .homeLead,.homeProjectBody p,.homeProcessCard p { max-width: min(100%,330px); font-size: 17px; overflow-wrap: anywhere; word-break: break-all; }
   .heroGrid { padding: 72px 0 64px; }
   .statsGrid { grid-template-columns: 1fr; }
   .card,.snapshot,.originStep,.compareCard,.timelineItem,.challengeCard { padding: 24px; }
