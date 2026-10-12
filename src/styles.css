@@ -596,6 +596,17 @@ h3 { font-size: 19px; }
 .foldItem p { font-size: 14px; color: var(--ink-soft); max-width: 70ch; }
 
 
+/* Threads 圖卡 */
+.cardStrip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.cardStrip img { width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid var(--line); border-radius: 3px; }
+.cardStrip figcaption {
+  margin-top: 10px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--ink-soft);
+}
+
 /* 圖片故事（小書案例） */
 .imageStory { display: grid; gap: 56px; }
 .imageStory img { width: 100%; border: 1px solid var(--line); border-radius: 3px; }
@@ -662,6 +673,7 @@ h3 { font-size: 19px; }
   .works { gap: 64px; }
   .aboutGrid, .proseGrid { grid-template-columns: 1fr; gap: 44px; }
   .tldr, .quality { grid-template-columns: 1fr; gap: 28px; }
+  .cardStrip { grid-template-columns: 1fr 1fr; gap: 14px; }
   .quality { gap: 0; }
   .factList > div { grid-template-columns: 1fr; gap: 2px; }
   .screen, .screen:nth-child(even) { grid-template-columns: 1fr; gap: 24px; }

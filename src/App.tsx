@@ -12,6 +12,7 @@ const links = {
   demo: 'https://jinfer68.github.io/netflix-taiwan-dashboard/',
   github: 'https://github.com/jinfer68/netflix-taiwan-dashboard',
   githubProfile: 'https://github.com/jinfer68',
+  threads: 'https://www.threads.com/@tw.binge.lab',
 }
 
 const taiwanBook = {
@@ -197,6 +198,18 @@ const decisions: [string, string, string][] = [
   ['05', '缺漏要被看見', '資料不完整的期間在介面上直接標示涵蓋範圍，不讓使用者把不完整的資料誤讀成全貌。'],
 ]
 
+const threadsCards: [string, string][] = [
+  [`${imageBase}threads/analysis-cover.jpg`, '深度分析：2025 年度誰最強'],
+  [`${imageBase}threads/analysis-top10.jpg`, '分析內頁：年度節目 Top 10'],
+  [`${imageBase}threads/weekly-cover.jpg`, '每週五週榜'],
+]
+
+const threadsSystem: [string, string, string][] = [
+  ['01', '同一份資料，換成大眾看得懂的形式', '儀表板適合自己探索，社群貼文要讓第一次滑到的人三秒內看懂。資料來源改用 Netflix 官方 Top 10 週榜，再加上自行整理的日榜。內容分成每週五的週榜、深度分析和每日投票。'],
+  ['02', '固定腳本處理，判斷才交給人', '下載、驗證、計算、畫圖卡、排程發文都是固定腳本，在雲端排程執行。驗證不通過就不發文；沒有資料的日子留白，不補值也不推估。圖卡與貼文要我核准才會發出，留言也由我回覆。'],
+  ['03', '每篇貼文都是一次測試', '發文前先寫下假說、比較對象和判定條件。每週一照事前寫好的條件判定，結果記進學習紀錄，不在看到數字後才改標準。新帳號樣本少，所以只有差距達 3 倍以上、換題目又重現的結果才算數。'],
+]
+
 const impactItems: [string, string][] = [
   ['支援內部報告', '公司在節目結案報告中使用了我整理出的收視排行資料，讓單一節目的表現能放進更完整的市場脈絡中解讀。'],
   ['降低回溯成本', '將原本需要逐篇翻找 Facebook 貼文的排行資料，轉換為可依年份、月份、週次查詢的資料工具。'],
@@ -315,7 +328,7 @@ function PortfolioHome() {
               <div>
                 <p className="workMeta">資料管線 — 互動儀表板</p>
                 <h3 className="workTitle">Netflix 台灣影視排行資料互動儀表板</h3>
-                <p className="workDesc">把散落在社群貼文裡的 Netflix 台灣排行，整理成 2021 年至今的日榜與週榜資料庫，做成可比較作品、類型與上架策略的互動儀表板，涵蓋影集與電影。</p>
+                <p className="workDesc">把散落在社群貼文裡的 Netflix 台灣排行，整理成 2021 年至今的日榜與週榜資料庫，做成可比較作品、類型與上架策略的互動儀表板，涵蓋影集與電影，並延伸成 Threads 數據帳號。</p>
                 <span className="workMore">閱讀完整案例</span>
               </div>
             </a>
@@ -431,6 +444,7 @@ const netflixToc: [string, string][] = [
   ['資料管線', 'nf-pipeline'],
   ['資料品質', 'nf-quality'],
   ['設計決策', 'nf-decisions'],
+  ['Threads 延伸', 'nf-threads'],
   ['影響與角色', 'nf-impact'],
 ]
 
@@ -619,6 +633,43 @@ function NetflixCase() {
                 <p>{desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section" id="nf-threads" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <SecHead zh="延伸：台灣追劇研究所" en="THREADS ACCOUNT" />
+          <p className="lead muted" style={{ marginBottom: 48 }}>2026 年 10 月，我把同一套資料延伸成 Threads 與 IG 數據帳號 @tw.binge.lab，測試這些排行資料能不能從內部分析工具，變成一般觀眾願意追蹤的內容。</p>
+          <div className="cardStrip">
+            {threadsCards.map(([src, caption]) => (
+              <figure key={src}>
+                <img src={src} alt={caption} loading="lazy" />
+                <figcaption>{caption}</figcaption>
+              </figure>
+            ))}
+          </div>
+          <div className="steps" style={{ marginTop: 64 }}>
+            {threadsSystem.map(([no, title, desc]) => (
+              <div className="step" key={title}>
+                <span className="stepNo">{no}</span>
+                <h3>{title}</h3>
+                <p>{desc}</p>
+              </div>
+            ))}
+          </div>
+          <div className="proseGrid" style={{ marginTop: 56 }}>
+            <div className="prose">
+              <h3 style={{ marginBottom: 16 }}>開站第一週的觀察</h3>
+              <p>瀏覽最高的是置頂說明（2,418）和年度分析（1,046），之後的貼文多落在 100–700。前兩天的高數字比較可能來自新帳號推送與親友分享，不一定代表內容本身好，所以目前只記方向、不下結論。讀者留言集中在台灣作品的處境（例如投票選項沒有台劇），這一點列為下一個待驗證的假說。</p>
+            </div>
+            <div className="prose">
+              <h3 style={{ marginBottom: 16 }}>為什麼放進作品集</h3>
+              <p>儀表板回答的是「資料怎麼被比較」，這個帳號回答的是「資料怎麼被看見」。兩者用同一份資料，但面對的受眾和判斷標準完全不同。帳號還在冷啟動期，我放進來的是方法與流程，不是成績。</p>
+              <div className="actions" style={{ marginTop: 24 }}>
+                <a className="btn ghost" href={links.threads} target="_blank" rel="noreferrer">前往 Threads ↗</a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
