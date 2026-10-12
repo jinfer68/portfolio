@@ -55,8 +55,8 @@ const works: Work[] = [
     cover: 'book',
     meta: '資訊設計 — 教育出版',
     title: '給學生看的台灣四百年圖解出口貿易史',
-    desc: '把台灣四百年的出口貿易史，轉譯成學生看得懂的 A5 圖像小書。重點在為特定讀者重新組織複雜資訊、選擇合適的圖像形式，並用 Figma 元件與 AI 素材流程，讓 20 多頁維持一致的視覺系統。',
-    points: ['為特定讀者轉譯複雜內容', '20 多頁一致的視覺系統', 'AI 素材 × Figma 工作流'],
+    desc: '課本裡的出口貿易只是一串年代與商品名稱。這本三人分組製作的 A5 圖像小書，把台灣四百年的出口史改寫成國高中生看得懂的故事；我主要負責企劃、視覺系統與 AI 素材工作流，讓 20 頁維持一致。',
+    points: ['從讀者的問題出發規劃每一頁', '五個時期、同一個三頁敘事節奏', 'AI 素材 × Figma 元件與外掛'],
   },
 ]
 
@@ -71,22 +71,61 @@ const personalIntro = {
   highlights: ['影視內容分析', '資料視覺化', '資訊設計', 'AI 協作工作流'],
 }
 
+const taiwanBookFacts: [string, string][] = [
+  ['角色', '「資訊圖表視覺化」課程期末專題，三人一組。題目與內容方向和組員共同討論，企劃、視覺系統與 AI 素材工作流的執行主要由我完成'],
+  ['期間', '2026 年 5–6 月'],
+  ['讀者', '國高中學生'],
+  ['工具', 'Figma（元件庫與自製外掛）・AI 圖像生成'],
+]
+
 const taiwanBookStats: [string, string][] = [
-  ['20+', 'A5 頁面'],
-  ['6', '歷史章節'],
-  ['8', 'Figma 元件'],
-  ['3', '素材版本'],
+  ['20 頁', 'A5 頁面'],
+  ['5 個', '歷史時期'],
+  ['10 個', '讀者問題'],
+  ['8 個', 'Figma 元件'],
+]
+
+const taiwanBookTldr: [string, string][] = [
+  ['問題', '對學生來說，出口貿易是課本裡分散的年代與商品名稱：看不出「為什麼是台灣」，也連不到今天的半導體。'],
+  ['做法', '先列出學生會問的問題，再決定每一頁回答什麼、用什麼圖像形式；五個時期都用同一個三頁節奏和同一組頁面元件。'],
+  ['成果', '20 頁 A5 小書：五個時期各三頁，加上開頭與結尾跨頁。素材另外整理成去字版與透明版，方便重新排版與延伸。'],
+]
+
+const taiwanBookQuestions: [string, string, string][] = [
+  ['為什麼以前台灣的茶很重要？', '茶葉從台灣運往海外的路線圖', '把地方歷史和世界貿易連起來'],
+  ['加工出口區是什麼？', '原料進來、商品出去的箭頭圖', '理解戰後經濟怎麼運作'],
+  ['出口冠軍代表這個產業最強嗎？', '出口值 vs. 技術門檻的雙軸圖', '避免學生只看排行榜就判斷價值'],
+  ['台灣為什麼能靠出口？', '標出東亞航線的台灣地理位置圖', '條件是地理、歷史與產業共同造成的'],
+]
+
+const taiwanBookDecisions: [string, string, string][] = [
+  ['01', '一個問題貫穿全書', '開頭就問「台灣為什麼一次次被世界需要」，之後每個時期都在回答同一個問題，學生讀到最後能自己比較答案的變化。'],
+  ['02', '每個時期固定三頁', '世界為什麼需要台灣（地圖與航線）→ 出口產業怎麼運作（產業鏈場景）→ 台灣因此改變了什麼（轉變前、契機、轉變後）。讀過一個時期，就知道下一個時期怎麼讀。'],
+  ['03', '用「累積的能力」串起時代', '每個時期最後一列寫「台灣累積了這些能力」，讓學生看見前一個時代留下的東西，怎麼成為下一個時代的起點。'],
+  ['04', '結尾把五個時期放在同一張表', '出口貿易圖譜用同一組欄位（世界體系、台灣角色、代表產業、累積能力）並排五個時期，讓比較一眼完成。'],
+  ['05', '從規劃到定稿的調整', '規劃階段以商品分頁（鹿皮、糖、茶、樟腦…）；定稿改成以時期分組，商品放進各時期的產業頁，「為什麼需要、怎麼生產、改變了什麼」在同一個時期內就能讀完。'],
 ]
 
 const taiwanBookProcess: [string, string, string][] = [
-  ['01', '歷史敘事拆解', '將台灣四百年出口貿易史拆成荷治、清領、日治、戰後加工、近代科技與結尾反思。'],
-  ['02', '資訊圖像轉譯', '把抽象的經濟史脈絡轉成地圖、時間軸、供應鏈、產業卡片與跨頁視覺。'],
-  ['03', '素材清理與重繪', '整理初版、純白版、去字版與透明版，讓頁面可被重新排版、疊合與後續輸出。'],
-  ['04', 'Figma 工作流', '建立頁面模板、時期標籤、資訊卡、時間軸列等元件，並以外掛流程加速 A5 頁面產出。'],
+  ['01', '讀者與問題', '設定讀者是國高中學生，列出他們會問的 10 個問題，逐一對應要提供的資訊與圖像形式。'],
+  ['02', '頁面企劃', '把 20 頁分配給開頭、五個時期與結尾，決定每頁的主題、內容與主要視覺元素。'],
+  ['03', '素材生成與整理', '用 AI 生成手繪感插圖，再整理成初版、純白版、去字版與透明版，讓頁面可以重新排版、疊合與輸出。'],
+  ['04', 'Figma 元件與外掛', '建立頁面模板、時期標籤、資訊卡、時間軸列等 8 個元件，並寫 Figma 外掛加速 A5 頁面的產出，讓 20 頁維持一致。'],
+]
+
+const taiwanBookPeriod: [string, string][] = [
+  [`${imageBase}taiwan-book/period-1.jpg`, '世界為什麼需要台灣：一座被放進航線的島'],
+  [`${imageBase}taiwan-book/period-2.jpg`, '出口產業怎麼運作：從轉運站帶動產業發展'],
+  [`${imageBase}taiwan-book/period-3.jpg`, '台灣因此改變了什麼：被貿易改變的土地'],
+]
+
+const taiwanBookSpread: [string, string][] = [
+  [`${imageBase}taiwan-book/spread-left.jpg`, '結尾跨頁（左）'],
+  [`${imageBase}taiwan-book/spread-right.jpg`, '結尾跨頁（右）：出口貿易圖譜'],
 ]
 
 const taiwanBookImages: [string, string][] = [
-  [`${imageBase}taiwan-book/toc.png`, '全書目錄與章節架構'],
+  [`${imageBase}taiwan-book/toc.png`, '目錄與章節架構'],
   [`${imageBase}taiwan-book/semiconductor-page.png`, '近代科技時期代表頁'],
   [`${imageBase}taiwan-book/contact-sheet.jpg`, '透明素材 contact sheet'],
 ]
@@ -487,6 +526,14 @@ function PortfolioHome() {
    案例：台灣四百年圖解出口貿易史
    ============================================================ */
 
+const taiwanBookToc: [string, string][] = [
+  ['摘要', 'tb-tldr'],
+  ['讀者問題', 'tb-questions'],
+  ['設計決策', 'tb-decisions'],
+  ['成果展示', 'tb-pages'],
+  ['製作流程', 'tb-process'],
+]
+
 function TaiwanBookCase() {
   return (
     <main>
@@ -494,22 +541,69 @@ function TaiwanBookCase() {
       <div className="container caseNav"><a href="#/">← 回作品集首頁</a></div>
 
       <header className="container caseHero">
-        <span className="eyebrow">CASE STUDY · INFORMATION DESIGN</span>
+        <span className="eyebrow">CASE STUDY · INFORMATION DESIGN · EDUCATION</span>
         <h1>{taiwanBook.title}</h1>
-        <p className="lead">這是一個將歷史、地理、經濟與設計整合在一起的資訊圖像小書。核心問題是：如何讓學生看懂台灣在不同時代被世界需要的方式，以及出口貿易如何改變產業、城市與國際定位。</p>
-        <div className="tagRow">{taiwanBook.tags.map(tag => <span key={tag}>{tag}</span>)}</div>
+        <p className="lead">歷史課本裡的出口貿易，只是一串年代和商品名稱。這本 A5 圖像小書把台灣四百年的出口史，改寫成國高中生看得懂的故事：每個時代，台灣為什麼被世界需要、靠什麼被需要，又因此改變了什麼。</p>
         <div className="statRow">
           {taiwanBookStats.map(([value, label]) => (
             <div className="stat" key={label}><strong>{value}</strong><span>{label}</span></div>
           ))}
         </div>
+        <dl className="factList">
+          {taiwanBookFacts.map(([term, desc]) => (
+            <div key={term}><dt>{term}</dt><dd>{desc}</dd></div>
+          ))}
+        </dl>
       </header>
 
-      <section className="section">
+      <div className="toc" aria-label="頁面目錄">
+        <div className="container tocInner">
+          {taiwanBookToc.map(([label, id]) => (
+            <button key={id} type="button" onClick={() => scrollToId(id)}>{label}</button>
+          ))}
+        </div>
+      </div>
+
+      <section className="section" id="tb-tldr">
         <div className="container">
-          <SecHead zh="製作流程" en="PROCESS" />
+          <SecHead zh="三句話看懂" en="TL;DR" />
+          <div className="tldr">
+            {taiwanBookTldr.map(([label, text]) => (
+              <div key={label}>
+                <span className="label">{label}</span>
+                <p>{text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section" id="tb-questions" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <SecHead zh="從讀者的問題開始" en="READER QUESTIONS" />
+          <p className="lead muted" style={{ marginBottom: 48 }}>動手畫之前，先列出學生讀這個題目會問的 10 個問題，再逐一決定要提供什麼資訊、用什麼圖像形式回答。以下是其中四個。</p>
+          <div className="qTable" role="table" aria-label="讀者問題與視覺化方式">
+            <div className="qRow qHead" role="row">
+              <span role="columnheader">讀者會問</span>
+              <span role="columnheader">視覺化方式</span>
+              <span role="columnheader">為什麼這樣畫</span>
+            </div>
+            {taiwanBookQuestions.map(([q, form, why]) => (
+              <div className="qRow" role="row" key={q}>
+                <span role="cell" className="qQuestion">{q}</span>
+                <span role="cell">{form}</span>
+                <span role="cell" className="muted">{why}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section" id="tb-decisions" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <SecHead zh="設計決策" en="DESIGN DECISIONS" />
           <div className="steps">
-            {taiwanBookProcess.map(([no, title, text]) => (
+            {taiwanBookDecisions.map(([no, title, text]) => (
               <div className="step" key={title}>
                 <span className="stepNo">{no}</span>
                 <h3>{title}</h3>
@@ -520,15 +614,49 @@ function TaiwanBookCase() {
         </div>
       </section>
 
-      <section className="section" style={{ paddingTop: 0 }}>
+      <section className="section" id="tb-pages" style={{ paddingTop: 0 }}>
         <div className="container">
           <SecHead zh="成果展示" en="SELECTED PAGES" />
-          <div className="imageStory">
+          <h3 className="subHead" style={{ marginTop: 0 }}>一個時期的三頁：荷治時期</h3>
+          <div className="pageRow three">
+            {taiwanBookPeriod.map(([src, caption]) => (
+              <figure key={src}>
+                <img src={src} alt={caption} loading="lazy" />
+                <figcaption>{caption}</figcaption>
+              </figure>
+            ))}
+          </div>
+          <h3 className="subHead">結尾跨頁：把五個時期放在一起比較</h3>
+          <div className="pageRow spread">
+            {taiwanBookSpread.map(([src, caption]) => (
+              <figure key={src}>
+                <img src={src} alt={caption} loading="lazy" />
+                <figcaption>{caption}</figcaption>
+              </figure>
+            ))}
+          </div>
+          <h3 className="subHead">架構與素材</h3>
+          <div className="pageRow three">
             {taiwanBookImages.map(([src, caption]) => (
               <figure key={src}>
                 <img src={src} alt={caption} loading="lazy" />
                 <figcaption>{caption}</figcaption>
               </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section" id="tb-process" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <SecHead zh="製作流程" en="PROCESS" />
+          <div className="steps">
+            {taiwanBookProcess.map(([no, title, text]) => (
+              <div className="step" key={title}>
+                <span className="stepNo">{no}</span>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </div>
             ))}
           </div>
         </div>

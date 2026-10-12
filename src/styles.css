@@ -656,6 +656,40 @@ h3 { font-size: 19px; }
   color: var(--ink-soft);
 }
 
+/* 小書案例：讀者問題表 */
+.qTable { border-top: 2px solid var(--ink); }
+.qRow {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr 1fr;
+  gap: 24px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 14.5px;
+}
+.qHead {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: var(--ink-soft);
+}
+.qQuestion { font-family: var(--serif); font-weight: 600; }
+
+/* 小書案例：頁面並排 */
+.pageRow { display: grid; gap: 24px; }
+.pageRow.three { grid-template-columns: repeat(3, 1fr); }
+.pageRow.spread { grid-template-columns: 1fr 1fr; gap: 0; }
+.pageRow img { width: 100%; border: 1px solid var(--line); border-radius: 3px; }
+.pageRow.spread img { border-radius: 0; }
+/* 並排三張時統一成 A5 比例，較長的素材圖從頂端裁切 */
+.pageRow.three img { aspect-ratio: 1748 / 2463; object-fit: cover; object-position: top; }
+.pageRow figcaption {
+  margin-top: 10px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--ink-soft);
+}
+
 /* 圖片故事（小書案例） */
 .imageStory { display: grid; gap: 56px; }
 .imageStory img { width: 100%; border: 1px solid var(--line); border-radius: 3px; }
@@ -723,6 +757,9 @@ h3 { font-size: 19px; }
   .aboutGrid, .proseGrid { grid-template-columns: 1fr; gap: 44px; }
   .tldr, .quality { grid-template-columns: 1fr; gap: 28px; }
   .cardStrip { grid-template-columns: 1fr 1fr; gap: 14px; }
+  .pageRow.three { grid-template-columns: 1fr; }
+  .qRow { grid-template-columns: 1fr; gap: 4px; }
+  .qHead { display: none; }
   .quality { gap: 0; }
   .factList > div { grid-template-columns: 1fr; gap: 2px; }
   .screen, .screen:nth-child(even) { grid-template-columns: 1fr; gap: 24px; }
