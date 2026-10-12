@@ -299,6 +299,55 @@ h3 { font-size: 19px; }
 }
 .workImg img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
 .work:hover .workImg { transform: translateY(-6px); }
+/* 設計封面（儀表板資料色帶、粉專圖卡）：不用 img 的 object-fit，hover 不放大 */
+.workImgDesign { background: var(--paper); }
+.dashCover { display: block; width: 100%; height: 100%; }
+.dashCoverLabel { font-family: var(--mono); font-size: 24px; letter-spacing: 3px; fill: var(--ink-soft); }
+.dashCoverHead { font-family: var(--serif); font-size: 58px; font-weight: 600; letter-spacing: 3px; fill: var(--ink); }
+.dashCoverTick { font-family: var(--mono); font-size: 27px; letter-spacing: 1px; fill: var(--ink-soft); }
+.bingeCover {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--tone);
+}
+.workImg .bingeCover img {
+  position: absolute;
+  width: auto;
+  object-fit: contain;
+  border: 1px solid rgba(27,25,22,.12);
+}
+.workImg .bingeCover img:first-child { height: 74%; left: 5%; top: 13%; }
+.workImg .bingeCover img:last-child { height: 56%; right: 5%; bottom: 13%; }
+
+.workPoints {
+  list-style: none;
+  margin-top: 16px;
+  border-top: 1px solid var(--line);
+  max-width: 42ch;
+}
+.workPoints li {
+  padding: 6px 0 6px 18px;
+  border-bottom: 1px solid var(--line);
+  font-size: 13.5px;
+  color: var(--ink);
+  position: relative;
+}
+.workPoints li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 8px;
+  height: 1px;
+  background: var(--seal);
+}
+
+/* 粉專案例：測試設計卡 */
+.experiment { border-top: 2px solid var(--ink); padding-top: 20px; }
+.experiment h3 { margin-bottom: 8px; letter-spacing: 1px; }
+.experiment .factList { margin-top: 12px; }
+
 .workMeta {
   font-family: var(--mono);
   font-size: 12px;

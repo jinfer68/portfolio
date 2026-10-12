@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { coverData } from './coverData'
 
 /* ============================================================
    內容資料（沿用原站文案，結構重整）
@@ -21,6 +22,43 @@ const taiwanBook = {
   cover: `${imageBase}taiwan-book/cover-blue.png`,
   tags: ['資訊設計', '教育內容', 'A5 小書', 'Figma Workflow'],
 }
+
+interface Work {
+  href: string
+  cover: 'dashboard' | 'binge' | 'book'
+  meta: string
+  title: string
+  desc: string
+  points: string[]
+}
+
+// 首頁作品：先講解決的問題與成果，再講方法；順序依與影視產業職缺的相關度
+const works: Work[] = [
+  {
+    href: '#/netflix-dashboard',
+    cover: 'dashboard',
+    meta: '資料產品 — 市場分析工具',
+    title: 'Netflix 台灣影視排行資料互動儀表板',
+    desc: '公司只看得到自家節目的名次，無法判斷表現算好還是不好。我把五年多的 Netflix 台灣排行整理成資料庫與互動儀表板，讓每部作品都能和同期、同類型的作品比較；整理出的排行資料已用在公司的節目結案報告。',
+    points: ['從行銷會議的一張折線圖，擴展成市場比較工具', '自訂清理規則，找出並修正資料層的錯誤', '每日更新、公開可用'],
+  },
+  {
+    href: '#/binge-lab',
+    cover: 'binge',
+    meta: '內容策略 — 社群數據帳號',
+    title: '台灣追劇研究所',
+    desc: '把同一份排行資料做成一般觀眾會想看的內容。Threads／IG 帳號的定位、內容形式、圖卡與發文流程都由我設計；每篇貼文發出前先寫好假說與判定標準，用數據了解受眾。',
+    points: ['帳號定位與三種內容形式', '自動化產製，發文前人工核准', '每篇貼文都是一次事先設計好的測試'],
+  },
+  {
+    href: '#/taiwan-book',
+    cover: 'book',
+    meta: '資訊設計 — 教育出版',
+    title: '給學生看的台灣四百年圖解出口貿易史',
+    desc: '把台灣四百年的出口貿易史，轉譯成學生看得懂的 A5 圖像小書。重點在為特定讀者重新組織複雜資訊、選擇合適的圖像形式，並用 Figma 元件與 AI 素材流程，讓 20 多頁維持一致的視覺系統。',
+    points: ['為特定讀者轉譯複雜內容', '20 多頁一致的視覺系統', 'AI 素材 × Figma 工作流'],
+  },
+]
 
 const personalIntro = {
   title: '吳景富',
@@ -78,9 +116,9 @@ const stats: [string, string][] = [
 ]
 
 const tldr: [string, string][] = [
-  ['問題', 'Netflix 不保留歷史排行，公開資訊只散落在粉專貼文裡。單一節目的名次無法說明表現好壞，也沒有可以回頭比較的資料。'],
-  ['做法', '把五年多的排行整理成日榜與週榜資料庫（週榜採 Netflix 官方 Top 10），訂出片名、類型與產地的清理規則，再把排名轉成積分，並用「上架後第 N 天」做比較基準。'],
-  ['成果', '一個可依年份、類型、上架方式與片源篩選的互動儀表板，涵蓋影集與電影。整理出的排行資料已用於公司的節目結案報告。'],
+  ['問題', '行銷會議只看得到自家節目每天的名次，無法判斷「第 5 名」算好還是不好；Netflix 也不公開歷史排行，沒有資料可以回頭比較。'],
+  ['做法', '把五年多的排行整理成資料庫（週榜採 Netflix 官方 Top 10），定義「積分」與「上架後第 N 天」兩把比較用的尺，做成可依類型、上架方式與片源篩選的儀表板。'],
+  ['成果', '整理出的排行資料用在公司的節目結案報告。儀表板涵蓋影集與電影、每日更新、公開可用，並延伸成 Threads 數據帳號「台灣追劇研究所」。'],
 ]
 
 const evolutionSteps: [string, string, string][] = [
@@ -199,16 +237,45 @@ const decisions: [string, string, string][] = [
   ['05', '缺漏要被看見', '資料不完整的期間在介面上直接標示涵蓋範圍，不讓使用者把不完整的資料誤讀成全貌。'],
 ]
 
-const threadsCards: [string, string][] = [
+const bingeIntroCard = `${imageBase}threads/intro.jpg`
+
+const bingeCards: [string, string][] = [
   [`${imageBase}threads/analysis-cover.jpg`, '深度分析：2025 年度誰最強'],
   [`${imageBase}threads/analysis-top10.jpg`, '分析內頁：年度節目 Top 10'],
   [`${imageBase}threads/weekly-cover.jpg`, '每週五週榜'],
 ]
 
-const threadsSystem: [string, string, string][] = [
-  ['01', '同一份資料，換成大眾看得懂的形式', '儀表板適合自己探索，社群貼文要讓第一次滑到的人三秒內看懂。資料來源改用 Netflix 官方 Top 10 週榜，再加上自行整理的日榜。內容分成每週五的週榜、深度分析和每日投票。'],
+const bingeFacts: [string, string][] = [
+  ['角色', '個人專案，負責帳號定位、內容規劃、圖卡設計，以及發文與成效追蹤流程'],
+  ['期間', '2026 年 10 月開站，持續經營中'],
+  ['平台', 'Threads・Instagram（@tw.binge.lab）'],
+  ['工具', 'Python（圖卡與排程腳本）・Threads／Instagram API・GitHub Actions・Claude'],
+]
+
+const bingeTldr: [string, string][] = [
+  ['問題', '儀表板適合會主動探索的人，但多數觀眾不會打開一個儀表板。排行資料要怎麼變成一般人會看、會想追蹤的內容？'],
+  ['做法', '定位成「用 Netflix 榜單，看台灣人在追什麼」，規劃週榜、深度分析、投票三種內容；圖卡與排程交給腳本，每篇發文前由我核准。'],
+  ['現況', '2026 年 10 月開站，還在冷啟動期。每篇貼文都事先寫好假說與判定標準，每週檢討一次，把學到的事記錄下來。'],
+]
+
+const bingeFormats: [string, string, string][] = [
+  ['每週週榜', '穩定供給', '每週五整理 Netflix 官方週榜，固定格式、固定時間，讓讀者知道什麼時候回來看。'],
+  ['深度分析', '建立專業形象', '例如「2025 年 Netflix 台灣誰最強」。題目與大綱先送審，核准後才算數字、做圖卡；成品再審一次才發布。'],
+  ['每日投票', '累積互動與樣本', '與影視相關的投票題。出題規則之一：答案不能是「看情況」，選項要具體到片名，降低參與門檻。'],
+]
+
+const bingeSystem: [string, string, string][] = [
+  ['01', '同一份資料，換成大眾看得懂的形式', '儀表板適合自己探索，社群貼文要讓第一次滑到的人三秒內看懂。資料來源是 Netflix 官方 Top 10 週榜，再加上自行整理的日榜，和儀表板共用同一份資料。'],
   ['02', '固定腳本處理，判斷才交給人', '下載、驗證、計算、畫圖卡、排程發文都是固定腳本，在雲端排程執行。驗證不通過就不發文；沒有資料的日子留白，不補值也不推估。圖卡與貼文要我核准才會發出，留言也由我回覆。'],
-  ['03', '每篇貼文都是一次測試', '發文前先寫下假說、比較對象和判定條件。每週一照事前寫好的條件判定，結果記進學習紀錄，不在看到數字後才改標準。新帳號樣本少，所以只有差距達 3 倍以上、換題目又重現的結果才算數。'],
+  ['03', '每篇貼文都是一次測試', '發文前先寫下假說、比較對象和判定條件。每週一照事前寫好的條件判定，結果記進學習紀錄，不在看到數字後才改標準。'],
+]
+
+const bingeExperiment: [string, string][] = [
+  ['觀察', '使用者回饋看不出投票題的邏輯；檢查後發現，原本的題目在新帳號瀏覽量太少時根本量不出差別。'],
+  ['假說', '用榜單資料出、有標準答案的「猜題」（隔天公布答案），瀏覽會比「你喜歡哪一部」的偏好題高：猜題的早期回覆多，平台比較會推送；公布答案也給陌生人回來的理由。'],
+  ['設計', '猜題與偏好題各 3 則，都在 20:00 發、星期幾平衡、固定同一個標籤，只差在題型。'],
+  ['判定', '發文前寫好。新帳號每組只有 3 則，1.5 倍的差距分不出是不是雜訊，所以要差 3 倍以上、換題目又重現才算數。'],
+  ['狀態', '進行中。第一週因為電腦睡眠漏發兩則，已補排並在紀錄中註明，不納入比較。'],
 ]
 
 const impactItems: [string, string][] = [
@@ -264,6 +331,58 @@ function ContactFooter() {
   )
 }
 
+/** 儀表板封面：1,935 天每天影集第 1 名的類型，連續同類型的天數合併成一段色帶 */
+function DashboardCover() {
+  const { span, days, runs, genres, allGenres, years } = coverData
+  const x0 = 64, w = 1072, top = 300, h = 380
+  const x = (day: number) => x0 + (day / span) * w
+  const korean = genres.find(g => g.name === '韓劇')
+  const legend = genres.slice(0, 5)
+  return (
+    <svg className="dashCover" viewBox="0 0 1200 900" role="img"
+      aria-label={`Netflix 台灣 ${days} 天的每日第 1 名類型，韓劇拿下 ${korean?.days} 天`}>
+      <rect width="1200" height="900" fill="var(--paper)" />
+      <text x={x0} y="104" className="dashCoverLabel">NETFLIX 台灣・每日影集第 1 名的類型</text>
+      <text x={x0 + w} y="104" textAnchor="end" className="dashCoverLabel">2021 — 2026</text>
+      <text x={x0} y="192" className="dashCoverHead">{days.toLocaleString()} 天裡，</text>
+      <text x={x0} y="258" className="dashCoverHead">
+        <tspan fill={korean?.color}>韓劇</tspan>拿下 {korean?.days.toLocaleString()} 天第 1 名
+      </text>
+      {runs.map(([start, len, g]) => (
+        <rect key={start} x={x(start)} y={top} width={(len / span) * w + 0.6} height={h} fill={allGenres[g].color} />
+      ))}
+      {years.map(y => (
+        <g key={y.label}>
+          <line x1={x(y.offset)} x2={x(y.offset)} y1={top + h} y2={top + h + 14} stroke="var(--ink-soft)" />
+          <text x={x(y.offset) + 8} y={top + h + 46} className="dashCoverTick">{y.label}</text>
+        </g>
+      ))}
+      {legend.map((g, i) => (
+        <g key={g.name} transform={`translate(${x0 + i * 214}, 822)`}>
+          <rect y="-21" width="22" height="22" fill={g.color} />
+          <text x="32" className="dashCoverTick">{g.name.replace(' (日)', '')} {Math.round((g.days / days) * 100)}%</text>
+        </g>
+      ))}
+    </svg>
+  )
+}
+
+/** 粉專封面：帳號介紹圖卡與深度分析圖卡 */
+function BingeCover() {
+  return (
+    <div className="bingeCover">
+      <img src={bingeIntroCard} alt="台灣追劇研究所介紹圖卡" />
+      <img src={bingeCards[0][0]} alt="深度分析圖卡：2025 年 Netflix 台灣誰最強" />
+    </div>
+  )
+}
+
+function WorkCover({ cover, title }: { cover: Work['cover']; title: string }) {
+  if (cover === 'dashboard') return <DashboardCover />
+  if (cover === 'binge') return <BingeCover />
+  return <img src={taiwanBook.cover} alt={`${title} 封面`} />
+}
+
 function SecHead({ zh, en }: { zh: string; en: string }) {
   return (
     <div className="secHead">
@@ -310,29 +429,22 @@ function PortfolioHome() {
         <div className="container">
           <SecHead zh="精選作品" en="SELECTED WORKS" />
           <div className="works">
-            <a className="work" href="#/taiwan-book">
-              <div className="workImg">
-                <img src={taiwanBook.cover} alt={`${taiwanBook.title} 封面`} />
-              </div>
-              <div>
-                <p className="workMeta">資訊設計 — A5 圖像小書</p>
-                <h3 className="workTitle">{taiwanBook.title}</h3>
-                <p className="workDesc">{taiwanBook.summary}</p>
-                <span className="workMore">閱讀完整案例</span>
-              </div>
-            </a>
-
-            <a className="work" href="#/netflix-dashboard">
-              <div className="workImg">
-                <img src={netflixDemoImages.overall} alt="Netflix 台灣影視排行資料互動儀表板截圖" />
-              </div>
-              <div>
-                <p className="workMeta">資料管線 — 互動儀表板</p>
-                <h3 className="workTitle">Netflix 台灣影視排行資料互動儀表板</h3>
-                <p className="workDesc">把散落在社群貼文裡的 Netflix 台灣排行，整理成 2021 年至今的日榜與週榜資料庫，做成可比較作品、類型與上架策略的互動儀表板，涵蓋影集與電影，並延伸成 Threads 數據帳號。</p>
-                <span className="workMore">閱讀完整案例</span>
-              </div>
-            </a>
+            {works.map(work => (
+              <a className="work" href={work.href} key={work.href}>
+                <div className={`workImg${work.cover === 'book' ? '' : ' workImgDesign'}`}>
+                  <WorkCover cover={work.cover} title={work.title} />
+                </div>
+                <div>
+                  <p className="workMeta">{work.meta}</p>
+                  <h3 className="workTitle">{work.title}</h3>
+                  <p className="workDesc">{work.desc}</p>
+                  <ul className="workPoints">
+                    {work.points.map(point => <li key={point}>{point}</li>)}
+                  </ul>
+                  <span className="workMore">閱讀完整案例</span>
+                </div>
+              </a>
+            ))}
           </div>
         </div>
       </section>
@@ -445,7 +557,6 @@ const netflixToc: [string, string][] = [
   ['資料管線', 'nf-pipeline'],
   ['資料品質', 'nf-quality'],
   ['設計決策', 'nf-decisions'],
-  ['Threads 延伸', 'nf-threads'],
   ['影響與角色', 'nf-impact'],
 ]
 
@@ -458,7 +569,7 @@ function NetflixCase() {
       <header className="container caseHero">
         <span className="eyebrow">CASE STUDY · DATA PIPELINE · VISUALIZATION</span>
         <h1>Netflix 台灣影視排行資料互動儀表板</h1>
-        <p className="lead">把散落在社群貼文裡的 Netflix 台灣排行，整理成 2021 年至今的日榜與週榜資料庫，再做成可以比較作品、類型與上架策略的互動儀表板。</p>
+        <p className="lead">公司想知道自家節目在 Netflix 上表現好不好，手上卻只有它自己的名次。我把五年多的 Netflix 台灣排行整理成資料庫與互動儀表板，讓任何一部作品都能和同期、同類型的作品放在一起比較。</p>
         <div className="actions">
           <a className="btn" href={links.demo} target="_blank" rel="noreferrer">開啟 Live Demo ↗</a>
           <a className="btn ghost" href={links.github} target="_blank" rel="noreferrer">GitHub Repo ↗</a>
@@ -638,43 +749,6 @@ function NetflixCase() {
         </div>
       </section>
 
-      <section className="section" id="nf-threads" style={{ paddingTop: 0 }}>
-        <div className="container">
-          <SecHead zh="延伸：台灣追劇研究所" en="THREADS ACCOUNT" />
-          <p className="lead muted" style={{ marginBottom: 48 }}>2026 年 10 月，我把同一套資料延伸成 Threads 與 IG 數據帳號 @tw.binge.lab，測試這些排行資料能不能從內部分析工具，變成一般觀眾願意追蹤的內容。</p>
-          <div className="cardStrip">
-            {threadsCards.map(([src, caption]) => (
-              <figure key={src}>
-                <img src={src} alt={caption} loading="lazy" />
-                <figcaption>{caption}</figcaption>
-              </figure>
-            ))}
-          </div>
-          <div className="steps" style={{ marginTop: 64 }}>
-            {threadsSystem.map(([no, title, desc]) => (
-              <div className="step" key={title}>
-                <span className="stepNo">{no}</span>
-                <h3>{title}</h3>
-                <p>{desc}</p>
-              </div>
-            ))}
-          </div>
-          <div className="proseGrid" style={{ marginTop: 56 }}>
-            <div className="prose">
-              <h3 style={{ marginBottom: 16 }}>開站第一週的觀察</h3>
-              <p>瀏覽最高的是置頂說明（2,418）和年度分析（1,046），之後的貼文多落在 100–700。前兩天的高數字比較可能來自新帳號推送與親友分享，不一定代表內容本身好，所以目前只記方向、不下結論。讀者留言集中在台灣作品的處境（例如投票選項沒有台劇），這一點列為下一個待驗證的假說。</p>
-            </div>
-            <div className="prose">
-              <h3 style={{ marginBottom: 16 }}>為什麼放進作品集</h3>
-              <p>儀表板回答的是「資料怎麼被比較」，這個帳號回答的是「資料怎麼被看見」。兩者用同一份資料，但面對的受眾和判斷標準完全不同。帳號還在冷啟動期，我放進來的是方法與流程，不是成績。</p>
-              <div className="actions" style={{ marginTop: 24 }}>
-                <a className="btn ghost" href={links.threads} target="_blank" rel="noreferrer">前往 Threads ↗</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section className="section" id="nf-impact" style={{ paddingTop: 0 }}>
         <div className="container">
           <SecHead zh="影響與角色" en="IMPACT & ROLE" />
@@ -695,7 +769,144 @@ function NetflixCase() {
             <div className="prose">
               <h3 style={{ marginBottom: 16 }}>使用工具</h3>
               <div className="tagRow" style={{ marginBottom: 24 }}>{techStack.map(item => <span key={item}>{item}</span>)}</div>
-              <p className="muted" style={{ fontSize: 14 }}>下一步：把電影的「語言」維度更正為「產地」、公開版資料每週自動同步、改善行動版瀏覽。</p>
+              <p className="muted" style={{ fontSize: 14 }}>下一步：把電影的「語言」維度更正為「產地」、改善行動版瀏覽。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="container">
+        <a className="nextWork" href="#/binge-lab">
+          <span className="eyebrow">延伸作品 — 同一份資料做成社群內容</span>
+          <h2>台灣追劇研究所</h2>
+        </a>
+      </div>
+
+      <ContactFooter />
+    </main>
+  )
+}
+
+/* ============================================================
+   案例：台灣追劇研究所（Threads／IG 數據帳號）
+   ============================================================ */
+
+const bingeToc: [string, string][] = [
+  ['摘要', 'bl-tldr'],
+  ['內容規劃', 'bl-content'],
+  ['產製流程', 'bl-system'],
+  ['用測試了解受眾', 'bl-test'],
+  ['第一週', 'bl-week1'],
+]
+
+function BingeLabCase() {
+  return (
+    <main>
+      <Nav />
+      <div className="container caseNav"><a href="#/">← 回作品集首頁</a></div>
+
+      <header className="container caseHero">
+        <span className="eyebrow">CASE STUDY · CONTENT STRATEGY · SOCIAL</span>
+        <h1>台灣追劇研究所</h1>
+        <p className="lead">儀表板證明了資料可以被比較，這個帳號要回答的是：資料能不能被一般觀眾看見、願意追蹤？我把同一份 Netflix 台灣排行做成 Threads 與 IG 上的數據內容，從定位、內容形式、圖卡到發文流程都由我設計。</p>
+        <div className="actions">
+          <a className="btn" href={links.threads} target="_blank" rel="noreferrer">前往 Threads ↗</a>
+          <a className="btn ghost" href="#/netflix-dashboard">資料來源：儀表板案例</a>
+        </div>
+        <dl className="factList">
+          {bingeFacts.map(([term, desc]) => (
+            <div key={term}><dt>{term}</dt><dd>{desc}</dd></div>
+          ))}
+        </dl>
+      </header>
+
+      <div className="toc" aria-label="頁面目錄">
+        <div className="container tocInner">
+          {bingeToc.map(([label, id]) => (
+            <button key={id} type="button" onClick={() => scrollToId(id)}>{label}</button>
+          ))}
+        </div>
+      </div>
+
+      <section className="section" id="bl-tldr">
+        <div className="container">
+          <SecHead zh="三句話看懂" en="TL;DR" />
+          <div className="tldr">
+            {bingeTldr.map(([label, text]) => (
+              <div key={label}>
+                <span className="label">{label}</span>
+                <p>{text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section" id="bl-content" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <SecHead zh="內容規劃" en="CONTENT" />
+          <p className="lead muted" style={{ marginBottom: 48 }}>定位是「用 Netflix 榜單，看台灣人在追什麼」。三種內容各有分工：一種讓人固定回來，一種建立專業形象，一種累積互動。</p>
+          <div className="cardStrip">
+            {bingeCards.map(([src, caption]) => (
+              <figure key={src}>
+                <img src={src} alt={caption} loading="lazy" />
+                <figcaption>{caption}</figcaption>
+              </figure>
+            ))}
+          </div>
+          <div className="steps" style={{ marginTop: 64 }}>
+            {bingeFormats.map(([title, role, desc]) => (
+              <div className="step" key={title}>
+                <span className="stepNo">{role}</span>
+                <h3>{title}</h3>
+                <p>{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section" id="bl-system" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <SecHead zh="產製流程" en="PRODUCTION" />
+          <div className="steps">
+            {bingeSystem.map(([no, title, desc]) => (
+              <div className="step" key={title}>
+                <span className="stepNo">{no}</span>
+                <h3>{title}</h3>
+                <p>{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section" id="bl-test" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <SecHead zh="用測試了解受眾" en="EXPERIMENTS" />
+          <p className="lead muted" style={{ marginBottom: 48 }}>新帳號最容易犯的錯，是看到一篇數字好就以為找到方法。所以每篇貼文發出前，先寫好它要驗證什麼、怎麼算成功。以下是目前進行中的一組測試。</p>
+          <div className="experiment">
+            <h3>猜題 vs. 偏好題：哪一種投票能帶來更多瀏覽？</h3>
+            <dl className="factList">
+              {bingeExperiment.map(([term, desc]) => (
+                <div key={term}><dt>{term}</dt><dd>{desc}</dd></div>
+              ))}
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <section className="section" id="bl-week1" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <SecHead zh="開站第一週" en="WEEK ONE" />
+          <div className="proseGrid">
+            <div className="prose">
+              <h3 style={{ marginBottom: 16 }}>觀察</h3>
+              <p>瀏覽最高的是置頂說明（2,418）和年度分析（1,046），之後的貼文多落在 100–700。前兩天的高數字比較可能來自新帳號推送與親友分享，不一定代表內容本身好，所以目前只記方向、不下結論。讀者留言集中在台灣作品的處境（例如投票選項沒有台劇），這一點列為下一個待驗證的假說。</p>
+            </div>
+            <div className="prose">
+              <h3 style={{ marginBottom: 16 }}>下一步</h3>
+              <p>資料型內容在 Threads 很難引發留言，所以不改帳號定位，而是增加被推薦給陌生人的機會：用腳本產生短影音（例如週榜冠軍的排名賽跑動畫）、在新片登上第 1 名時發「這部劇的數字」，以及讓腳本每天產生草稿、我每週整批審核，增加發文數。</p>
             </div>
           </div>
         </div>
@@ -731,6 +942,7 @@ function App() {
 
   if (route === 'taiwan-book') return <TaiwanBookCase />
   if (route === 'netflix-dashboard') return <NetflixCase />
+  if (route === 'binge-lab') return <BingeLabCase />
   return <PortfolioHome />
 }
 
