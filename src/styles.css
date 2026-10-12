@@ -299,33 +299,6 @@ h3 { font-size: 19px; }
 }
 .workImg img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
 .work:hover .workImg { transform: translateY(-6px); }
-.dashboardCover {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: 24px;
-  padding: clamp(26px, 4vw, 44px);
-  background:
-    linear-gradient(180deg, rgba(252,252,250,.94), rgba(252,252,250,.82)),
-    radial-gradient(circle at 20% 12%, rgba(181,64,46,.14), transparent 32%),
-    var(--tone);
-}
-.dashboardCover .coverEyebrow {
-  max-width: 32ch;
-  font-family: var(--mono);
-  font-size: 12px;
-  line-height: 1.8;
-  letter-spacing: 3px;
-  color: var(--ink-soft);
-}
-.dashboardCover strong {
-  max-width: 12ch;
-  font-family: var(--serif);
-  font-size: clamp(32px, 5.2vw, 56px);
-  font-weight: 600;
-  line-height: 1.26;
-  letter-spacing: 0.08em;
-}
 .workMeta {
   font-family: var(--mono);
   font-size: 12px;
@@ -424,6 +397,64 @@ h3 { font-size: 19px; }
 .stat { font-family: var(--mono); }
 .stat strong { display: block; font-size: 22px; font-weight: 500; letter-spacing: 1px; }
 .stat span { font-size: 12px; letter-spacing: 2px; color: var(--ink-soft); }
+
+/* 專案資訊：角色／期間／工具／產出 */
+.factList { margin-top: 36px; border-top: 1px solid var(--line); }
+.factList > div {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 24px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.factList dt {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: var(--ink-soft);
+  padding-top: 2px;
+}
+.factList dd { font-size: 14.5px; }
+
+/* 三句話摘要 */
+.tldr { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+.tldr > div { border-top: 2px solid var(--ink); padding-top: 16px; }
+.tldr > div:last-child { border-top-color: var(--seal); }
+.tldr p { font-size: 15px; }
+
+.label, .foldItem .label {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--seal);
+  margin: 8px 0 2px;
+}
+
+.subHead { margin: 88px 0 28px; letter-spacing: 2px; }
+
+/* 資料品質案例 */
+.quality { display: grid; grid-template-columns: 1fr 1fr; gap: 0 56px; border-top: 1px solid var(--line); }
+.qualityItem { padding: 28px 0 32px; border-bottom: 1px solid var(--line); }
+.qualityHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 4px;
+}
+.qualityHead h3 { font-size: 17px; letter-spacing: 1px; }
+.qualityStatus {
+  flex-shrink: 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 0 8px;
+}
+.qualityItem p { font-size: 14px; color: var(--ink-soft); }
 
 /* 修正：案例頁內目錄（hash 路由相容，用按鈕捲動） */
 .toc {
@@ -563,14 +594,7 @@ h3 { font-size: 19px; }
 .foldItem { padding: 18px 0; border-top: 1px solid var(--line); }
 .foldItem h3 { font-size: 15.5px; letter-spacing: 1px; margin-bottom: 8px; }
 .foldItem p { font-size: 14px; color: var(--ink-soft); max-width: 70ch; }
-.foldItem .label {
-  display: inline-block;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 2px;
-  color: var(--seal);
-  margin: 8px 0 2px;
-}
+
 
 /* 圖片故事（小書案例） */
 .imageStory { display: grid; gap: 56px; }
@@ -637,6 +661,9 @@ h3 { font-size: 19px; }
   .work:nth-child(even) .workImg { order: 0; }
   .works { gap: 64px; }
   .aboutGrid, .proseGrid { grid-template-columns: 1fr; gap: 44px; }
+  .tldr, .quality { grid-template-columns: 1fr; gap: 28px; }
+  .quality { gap: 0; }
+  .factList > div { grid-template-columns: 1fr; gap: 2px; }
   .screen, .screen:nth-child(even) { grid-template-columns: 1fr; gap: 24px; }
   .screen:nth-child(even) .screenFig { order: 0; }
   .screens { gap: 64px; }
