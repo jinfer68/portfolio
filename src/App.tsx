@@ -526,6 +526,63 @@ function DashboardCover() {
   )
 }
 
+/** 黑松封面：媒體走期。上半是棒球行事曆，下半是三個投放階段與各自的主 KPI（內容取自案例的走期與 KPI 頁） */
+function HeysongCover() {
+  const x0 = 250, w = 886, days = 122                 // 2027-08-01 起 122 天（到 11/30）
+  const x = (d: number) => x0 + (d / days) * w
+  const months: [string, number][] = [['8 月', 0], ['9 月', 31], ['10 月', 61], ['11 月', 92]]
+  const calendar: [string, [number, number, boolean][]][] = [
+    ['中職賽季', [[0, 86, true]]],                      // 例行賽到台灣大賽，10 月下旬結束
+    ['12 強', [[99, 107, true], [109, 113, false]]],   // 台灣場 11/8–15（實心）、東京場 11/18–21（外框）
+    ['黑豹旗', [[86, 122, true]]],
+  ]
+  const phases: [string, string, number, number, boolean][] = [
+    ['短期｜喚起', '品牌聯想提升', 0, 86, true],
+    ['中期｜擴散', '發票登錄・CPA', 99, 113, true],
+    ['長期｜深耕', '年度品牌追蹤', 86, 122, false],
+  ]
+  return (
+    <svg className="dashCover" viewBox="0 0 1200 900" role="img"
+      aria-label="黑松沙士媒體走期：跟著棒球行事曆分三個階段投放，每個階段一個主 KPI">
+      <rect width="1200" height="900" fill="var(--paper)" />
+      <text x="64" y="104" className="dashCoverLabel">黑松沙士 × 2027 世界 12 強・媒體走期</text>
+      <text x="1136" y="104" textAnchor="end" className="dashCoverLabel">2027.08 — 11</text>
+      <text x="64" y="192" className="dashCoverHead">跟著棒球行事曆投放，</text>
+      <text x="64" y="258" className="dashCoverHead">三個階段、<tspan fill="var(--seal)">三個主 KPI</tspan></text>
+      {months.map(([label, d]) => (
+        <g key={label}>
+          <line x1={x(d)} x2={x(d)} y1="318" y2="700" stroke="var(--line)" />
+          <text x={x(d) + 8} y="314" className="dashCoverTick">{label}</text>
+        </g>
+      ))}
+      {calendar.map(([label, bars], i) => (
+        <g key={label} transform={`translate(0, ${350 + i * 54})`}>
+          <text x="64" y="24" className="dashCoverTick">{label}</text>
+          {bars.map(([a, b, solid]) => (
+            <rect key={a} x={x(a)} y="2" width={x(b) - x(a)} height="30" rx="2"
+              fill={solid ? 'var(--ink-soft)' : 'none'} stroke="var(--ink-soft)" strokeWidth="2" opacity={solid ? 0.55 : 0.8} />
+          ))}
+        </g>
+      ))}
+      <line x1="64" x2="1136" y1="530" y2="530" stroke="var(--ink-soft)" />
+      {phases.map(([label, kpi, a, b, solid], i) => (
+        <g key={label} transform={`translate(0, ${552 + i * 54})`}>
+          <text x="64" y="26" className="dashCoverTick" fill="var(--seal)" style={{ fill: 'var(--seal)' }}>{label}</text>
+          <rect x={x(a)} y="2" width={x(b) - x(a)} height="34" rx="2"
+            fill={solid ? 'var(--seal)' : 'none'} stroke="var(--seal)" strokeWidth="2.5" />
+        </g>
+      ))}
+      {phases.map(([label, kpi], i) => (
+        <g key={label} transform={`translate(${64 + i * 362}, 768)`}>
+          <line x1="0" x2="330" y1="-34" y2="-34" stroke="var(--ink)" strokeWidth="2" />
+          <text y="0" className="dashCoverTick" style={{ fill: 'var(--seal)' }}>{label.split('｜')[0]}主 KPI</text>
+          <text y="46" className="dashCoverKpi">{kpi}</text>
+        </g>
+      ))}
+    </svg>
+  )
+}
+
 /** 粉專封面：帳號介紹圖卡與深度分析圖卡 */
 function BingeCover() {
   return (
@@ -539,7 +596,7 @@ function BingeCover() {
 function WorkCover({ cover, title }: { cover: Work['cover']; title: string }) {
   if (cover === 'dashboard') return <DashboardCover />
   if (cover === 'binge') return <BingeCover />
-  if (cover === 'heysong') return <img src={heysongImg('kv')} alt={`${title} 主視覺`} />
+  if (cover === 'heysong') return <HeysongCover />
   return <img src={taiwanBook.cover} alt={`${title} 封面`} />
 }
 
@@ -609,7 +666,7 @@ function PortfolioHome() {
           <div className="works">
             {works.map(work => (
               <a className="work" href={work.href} key={work.href}>
-                <div className={`workImg${work.cover === 'book' || work.cover === 'heysong' ? '' : ' workImgDesign'}`}>
+                <div className={`workImg${work.cover === 'book' ? '' : ' workImgDesign'}`}>
                   <WorkCover cover={work.cover} title={work.title} />
                 </div>
                 <div>
