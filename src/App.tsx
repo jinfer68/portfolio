@@ -25,7 +25,7 @@ const taiwanBook = {
 
 interface Work {
   href: string
-  cover: 'dashboard' | 'binge' | 'book'
+  cover: 'dashboard' | 'binge' | 'heysong' | 'book'
   meta: string
   title: string
   desc: string
@@ -49,6 +49,14 @@ const works: Work[] = [
     title: '台灣追劇研究所',
     desc: '把同一份排行資料做成一般觀眾會想看的內容。Threads／IG 帳號的定位、內容形式、圖卡與發文流程都由我設計；每篇貼文發出前先寫好假說與判定標準，用數據了解受眾。',
     points: ['帳號定位與三種內容形式', '自動化產製，發文前人工核准', '每篇貼文都是一次事先設計好的測試'],
+  },
+  {
+    href: '#/heysong',
+    cover: 'heysong',
+    meta: '媒體企劃 — 品牌行銷提案',
+    title: '黑松沙士：開一罐，開啟主場',
+    desc: '宏盟 Shining Nova 計畫的四人小組提案，洞察與創意完整，但媒體段說不出「為什麼這樣投」。提案後我用目標、受眾、媒體組合、成效指標四個支柱重構媒體策略，讓每個選擇都對得回公開數據。',
+    points: ['走期、選點與預算都附上數據來源與推算公式', '用看球動機切受眾，解決年齡重疊', 'KPI 拆進各階段：短期量想起、中期量行動、長期量認同'],
   },
   {
     href: '#/taiwan-book',
@@ -326,6 +334,67 @@ const impactItems: [string, string][] = [
 
 const techStack = ['Python', 'Selenium', 'pytest', 'TMDB API', 'Excel', 'JSON', 'React', 'TypeScript', 'Vite', 'Recharts', 'ECharts', 'GitHub Actions']
 
+const heysongImg = (name: string) => `${imageBase}heysong/${name}.jpg`
+
+const heysongFacts: [string, string][] = [
+  ['角色', '宏盟（Omnicom）Shining Nova 計畫期末專案，四人一組。洞察與創意由小組共同提出；提案後的媒體策略修訂（目標、受眾依據、走期、媒體組合、預算推算、成效指標）由我完成'],
+  ['期間', '2026 年 8 月小組提案；2026 年 10 月修訂媒體策略'],
+  ['情境', '黑松沙士 × 2027 年世界 12 強（台灣主辦）'],
+  ['工具', 'PowerPoint・公開資料查證（北捷進出量、中職票房、資策會 MIC 社群調查）・Claude（資料查證與簡報產製協作）'],
+]
+
+const heysongStats: [string, string][] = [
+  ['27 → 39', '簡報頁數'],
+  ['12 頁', '新增策略頁'],
+  ['4 個', '策略支柱'],
+  ['3 段', '階段式 KPI'],
+]
+
+const heysongTldr: [string, string][] = [
+  ['問題', '原提案從「情境缺席」的洞察一路推到「開罐應援」的創意，邏輯完整；但媒體只夾在活動頁裡出現：沒有專案目標，走期只寫了一組日期，捷運選點沒有理由，KPI 只列名稱、沒有主次與目標值。'],
+  ['做法', '用目標、受眾、媒體組合、成效指標四個支柱重新梳理。先把要查的公開數據列給組員審核，再用查到的數據決定走期、選點與預算；每個數字都標明是實據、推論還是示意。'],
+  ['成果', '新增目標、受眾依據、走期、媒體矩陣、數位投放、戶外選點、預算推算與三段 KPI。KPI 不再集中在最後，每個階段講完就接著說明怎麼量。'],
+]
+
+const heysongBefore = ['媒體夾在活動頁中', '12 強走期寫成 11/8–21', '受眾年齡重疊、沒有依據', '捷運選點沒有理由', 'KPI 沒有主次與目標值']
+const heysongAfter = ['獨立的媒體角色矩陣', '跟著棒球行事曆排走期', '用看球動機切受眾', '用捷運進出量選點', '每階段一個主 KPI']
+
+const heysongDecisions: [string, string, string][] = [
+  ['01', '目標設在情境，不設在認知', '洞察說黑松沙士的知名度不是問題，缺的是被想起的時刻。所以品牌目標寫成建立「看棒球＝喝黑松沙士」的情境聯想，而不是提升知名度，避免目標和洞察互相打架。'],
+  ['02', '跟著棒球行事曆排走期', '查證後發現 2027 年 12 強的台灣場只到 11/15，四強賽移到東京；中職賽季也在 10 月下旬就結束。所以全台球場的曝光移到 8–10 月的短期，中期拆成「台灣場現場」和「東京場線上」兩段，黑豹旗接在 12 強之後。'],
+  ['03', '用看球動機切受眾', '原本三群受眾的年齡重疊（18–34 歲和 25–35 歲），到了選媒體就分不開。改成用看球的動機來切：記憶、娛樂、認同，各對應一個階段，最終涵蓋所有看球情境的觀眾。'],
+  ['04', '回應「用老球員打年輕人」的矛盾', '審稿時發現：專案要打年輕人，引線卻是已退休的陽岱鋼。我們沒有換掉代言人，而是把短期受眾改成記得他的記憶型球迷（以他 2006–2016 年效力日本火腿推算，2027 年約 30–45 歲），由他們帶起話題，中期再轉向 18–34 歲。'],
+  ['05', '用公開數據選捷運站', '北捷 2025 年 7 月資料顯示，市政府站日均進出約 12.6 萬人次，是國父紀念館站的兩倍，北捷也建議大巨蛋散場改走市政府站，所以加進選點；新莊站在全線 108 站中排第 76 名，拿掉。'],
+  ['06', '講到哪裡，就在哪裡量', '原本 KPI 全放在最後。改成在開頭先講選指標的原則，每個階段講完就接該階段的主 KPI：短期量品牌聯想提升，中期量發票登錄與 CPA，長期量年度品牌追蹤。'],
+]
+
+const heysongData: [string, string][] = [
+  ['實據', '北捷各站進出量、中職 2025 年票房、資策會 MIC 社群使用率、12 強與黑豹旗的賽期，都附上出處。'],
+  ['推論', '受眾年齡。中職沒有公開觀眾年齡結構，所以用進場人數、社群使用率、啦啦隊聲量與學術研究交叉推論，頁面上標明「推論」。'],
+  ['示意', '預算與 KPI 目標值。用「目標觸及 × 頻次 ÷ 1,000 × CPM」反推：數位約 805 萬，換到短期觸及 300 萬人、中期 2 萬筆發票登錄；CPM 由 Meta 國際平均換算，頁面上標明「示意」。'],
+  ['不引用', '12 強收視率、碳酸飲料消費年齡、捷運燈箱刊例價都查不到可靠出處，所以不寫進簡報；燈箱與 OTT 轉播廣告在預算表標為「待詢價」。'],
+]
+
+const heysongCompare: [string, string, string, string][] = [
+  [heysongImg('before-kpi'), '修訂前：KPI 只列指標名稱', heysongImg('kpi-short'), '修訂後：每階段一個主 KPI，次要指標說明為什麼選、怎麼量'],
+  [heysongImg('before-ooh'), '修訂前：捷運燈箱只列站名', heysongImg('ooh'), '修訂後：用進出量選點，短期全台鋪點、中期集中大巨蛋'],
+]
+
+const heysongPages: [string, string][] = [
+  [heysongImg('goal'), '專案目標：品牌、行為、長期三層'],
+  [heysongImg('audience-evidence'), '受眾依據：以年代推算與多項數據交叉推論'],
+  [heysongImg('timeline'), '走期規劃：中職賽季 → 12 強 → 黑豹旗'],
+  [heysongImg('media-matrix'), '媒體角色矩陣：每個媒體負責漏斗的一層'],
+  [heysongImg('digital-short'), '數位投放：短期四個波段'],
+  [heysongImg('budget'), '預算推算：用公式反推，數字標明示意'],
+]
+
+const heysongNext: [string, string][] = [
+  ['受眾年齡用問卷驗證', '中職沒有公開觀眾年齡，目前是推論。下一步可以在球場或社群做小規模問卷，確認三群受眾的比例。'],
+  ['媒體單價實際詢價', '捷運燈箱與 OTT 轉播廣告沒有公開刊例，預算表裡標為待詢價；實際執行要向代理商取得報價。'],
+  ['確認品牌提升調查的門檻', '短期主 KPI 依賴平台內建的品牌提升調查，通常有最低投放金額，需要事先確認，否則改用自辦前後測問卷。'],
+]
+
 /* ============================================================
    共用元件
    ============================================================ */
@@ -419,6 +488,7 @@ function BingeCover() {
 function WorkCover({ cover, title }: { cover: Work['cover']; title: string }) {
   if (cover === 'dashboard') return <DashboardCover />
   if (cover === 'binge') return <BingeCover />
+  if (cover === 'heysong') return <img src={heysongImg('kv')} alt={`${title} 主視覺`} />
   return <img src={taiwanBook.cover} alt={`${title} 封面`} />
 }
 
@@ -470,7 +540,7 @@ function PortfolioHome() {
           <div className="works">
             {works.map(work => (
               <a className="work" href={work.href} key={work.href}>
-                <div className={`workImg${work.cover === 'book' ? '' : ' workImgDesign'}`}>
+                <div className={`workImg${work.cover === 'book' || work.cover === 'heysong' ? '' : ' workImgDesign'}`}>
                   <WorkCover cover={work.cover} title={work.title} />
                 </div>
                 <div>
@@ -1041,6 +1111,162 @@ function BingeLabCase() {
       </section>
 
       <div className="container">
+        <a className="nextWork" href="#/heysong">
+          <span className="eyebrow">下一個作品 — NEXT</span>
+          <h2>黑松沙士：開一罐，開啟主場</h2>
+        </a>
+      </div>
+
+      <ContactFooter />
+    </main>
+  )
+}
+
+/* ============================================================
+   案例：黑松沙士 開一罐，開啟主場（媒體策略）
+   ============================================================ */
+
+const heysongToc: [string, string][] = [
+  ['摘要', 'hs-tldr'],
+  ['問題診斷', 'hs-diagnosis'],
+  ['重構決策', 'hs-decisions'],
+  ['數字怎麼來', 'hs-data'],
+  ['成果展示', 'hs-pages'],
+  ['下一步', 'hs-next'],
+]
+
+function HeysongCase() {
+  return (
+    <main>
+      <Nav />
+      <div className="container caseNav"><a href="#/">← 回作品集首頁</a></div>
+
+      <header className="container caseHero">
+        <span className="eyebrow">CASE STUDY · MEDIA PLANNING · BRAND STRATEGY</span>
+        <h1>黑松沙士：開一罐，開啟主場</h1>
+        <p className="lead">黑松沙士的知名度不是問題，問題是沒有人在「現在」想起它。我們的小組提案把黑松放進棒球場，讓「開罐」成為進入主場的儀式；提案後我重構了媒體策略，讓「投在哪、什麼時候投、怎麼量」都講得出依據。</p>
+        <div className="statRow">
+          {heysongStats.map(([value, label]) => (
+            <div className="stat" key={label}><strong>{value}</strong><span>{label}</span></div>
+          ))}
+        </div>
+        <dl className="factList">
+          {heysongFacts.map(([term, desc]) => (
+            <div key={term}><dt>{term}</dt><dd>{desc}</dd></div>
+          ))}
+        </dl>
+      </header>
+
+      <div className="toc" aria-label="頁面目錄">
+        <div className="container tocInner">
+          {heysongToc.map(([label, id]) => (
+            <button key={id} type="button" onClick={() => scrollToId(id)}>{label}</button>
+          ))}
+        </div>
+      </div>
+
+      <section className="section" id="hs-tldr">
+        <div className="container">
+          <SecHead zh="三句話看懂" en="TL;DR" />
+          <div className="tldr">
+            {heysongTldr.map(([label, text]) => (
+              <div key={label}>
+                <span className="label">{label}</span>
+                <p>{text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section" id="hs-diagnosis" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <SecHead zh="問題診斷" en="DIAGNOSIS" />
+          <p className="lead muted" style={{ marginBottom: 48 }}>評審看得到我們「做什麼」，卻看不到「為什麼這樣投、投多少、投在哪」。整份提案沒有獨立的媒體段落，捷運燈箱、KOL、大巨蛋場外廣告都夾在活動頁裡。</p>
+          <div className="compare">
+            <div className="compareCol">
+              <h3>Before — 原提案</h3>
+              <ul>{heysongBefore.map(item => <li key={item}>{item}</li>)}</ul>
+            </div>
+            <span className="compareArrow">目標・受眾<br />媒體・指標 →</span>
+            <div className="compareCol after">
+              <h3>After — 修訂版</h3>
+              <ul>{heysongAfter.map(item => <li key={item}>{item}</li>)}</ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section" id="hs-decisions" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <SecHead zh="重構決策" en="DECISIONS" />
+          <div className="steps">
+            {heysongDecisions.map(([no, title, text]) => (
+              <div className="step" key={title}>
+                <span className="stepNo">{no}</span>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section" id="hs-data" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <SecHead zh="數字怎麼來" en="EVIDENCE" />
+          <p className="lead muted" style={{ marginBottom: 48 }}>提案沒有預算上限，最容易出錯的地方是隨手寫一個看起來合理的數字。所以簡報裡每個數字都分成四類處理。</p>
+          <dl className="factList">
+            {heysongData.map(([term, desc]) => (
+              <div key={term}><dt>{term}</dt><dd>{desc}</dd></div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      <section className="section" id="hs-pages" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <SecHead zh="成果展示" en="SELECTED SLIDES" />
+          {heysongCompare.map(([beforeSrc, beforeCap, afterSrc, afterCap]) => (
+            <div className="pageRow two" key={beforeSrc} style={{ marginBottom: 48 }}>
+              <figure>
+                <img src={beforeSrc} alt={beforeCap} loading="lazy" />
+                <figcaption>{beforeCap}</figcaption>
+              </figure>
+              <figure>
+                <img src={afterSrc} alt={afterCap} loading="lazy" />
+                <figcaption>{afterCap}</figcaption>
+              </figure>
+            </div>
+          ))}
+          <h3 className="subHead">新增的策略頁</h3>
+          <div className="pageRow two">
+            {heysongPages.map(([src, caption]) => (
+              <figure key={src}>
+                <img src={src} alt={caption} loading="lazy" />
+                <figcaption>{caption}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section" id="hs-next" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <SecHead zh="如果要真正執行" en="NEXT STEPS" />
+          <div className="steps">
+            {heysongNext.map(([title, text], i) => (
+              <div className="step" key={title}>
+                <span className="stepNo">{String(i + 1).padStart(2, '0')}</span>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="container">
         <a className="nextWork" href="#/taiwan-book">
           <span className="eyebrow">下一個作品 — NEXT</span>
           <h2>{taiwanBook.title}</h2>
@@ -1071,6 +1297,7 @@ function App() {
   if (route === 'taiwan-book') return <TaiwanBookCase />
   if (route === 'netflix-dashboard') return <NetflixCase />
   if (route === 'binge-lab') return <BingeLabCase />
+  if (route === 'heysong') return <HeysongCase />
   return <PortfolioHome />
 }
 

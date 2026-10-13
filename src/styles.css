@@ -678,6 +678,7 @@ h3 { font-size: 19px; }
 .pageRow { display: grid; gap: 24px; }
 .pageRow.three { grid-template-columns: repeat(3, 1fr); }
 .pageRow.spread { grid-template-columns: 1fr 1fr; gap: 0; }
+.pageRow.two { grid-template-columns: 1fr 1fr; }
 .pageRow img { width: 100%; border: 1px solid var(--line); border-radius: 3px; }
 .pageRow.spread img { border-radius: 0; }
 /* 並排三張時統一成 A5 比例，較長的素材圖從頂端裁切 */
@@ -758,6 +759,7 @@ h3 { font-size: 19px; }
   .tldr, .quality { grid-template-columns: 1fr; gap: 28px; }
   .cardStrip { grid-template-columns: 1fr 1fr; gap: 14px; }
   .pageRow.three { grid-template-columns: 1fr; }
+  .pageRow.two { grid-template-columns: 1fr; }
   .qRow { grid-template-columns: 1fr; gap: 4px; }
   .qHead { display: none; }
   .quality { gap: 0; }

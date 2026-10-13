@@ -18,6 +18,10 @@
    - Dashboard Demo: https://jinfer68.github.io/netflix-taiwan-dashboard/
    - Dashboard Repo: https://github.com/jinfer68/netflix-taiwan-dashboard
 
+3. 黑松沙士：開一罐，開啟主場
+   - 宏盟 Shining Nova 計畫小組提案，提案後由我重構媒體策略
+   - 案例頁：問題診斷、重構決策、數字來源分類、修訂前後對照
+
 ## Local Development
 
 ```bash
