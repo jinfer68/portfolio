@@ -23,6 +23,15 @@ const taiwanBook = {
   tags: ['資訊設計', '教育內容', 'A5 小書', 'Figma Workflow'],
 }
 
+/** 四個核心能力：首頁、作品卡、案例頁都用同一組名稱，讀者看幾次就記住 */
+type Ability = '媒體與內容企劃' | '成效指標與追蹤' | '測試與優化' | '數據整理與視覺化'
+const abilities: [Ability, string][] = [
+  ['媒體與內容企劃', '從目標與受眾出發，決定說什麼、在哪裡說'],
+  ['成效指標與追蹤', '先定義怎麼算成功，再持續追蹤與回報'],
+  ['測試與優化', '先寫假說與判定標準，再用結果調整下一步'],
+  ['數據整理與視覺化', '把零散的資料整理成看得懂、能比較的形式'],
+]
+
 interface Work {
   href: string
   cover: 'dashboard' | 'binge' | 'heysong' | 'book'
@@ -30,48 +39,90 @@ interface Work {
   title: string
   desc: string
   points: string[]
+  skills: Ability[]
 }
 
-// 首頁作品：先講解決的問題與成果，再講方法；順序依與影視產業職缺的相關度
+// 首頁作品：先講解決的問題與成果，再講方法；順序依與廣告職缺（投放、成效優化、企劃、業務）的相關度
 const works: Work[] = [
-  {
-    href: '#/netflix-dashboard',
-    cover: 'dashboard',
-    meta: '資料產品 — 市場分析工具',
-    title: 'Netflix 台灣影視排行資料互動儀表板',
-    desc: '公司只看得到自家節目的名次，無法判斷表現算好還是不好。我把五年多的 Netflix 台灣排行整理成資料庫與互動儀表板，讓每部作品都能和同期、同類型的作品比較；整理出的排行資料已用在公司的節目結案報告。',
-    points: ['從行銷會議的一張折線圖，擴展成市場比較工具', '自訂清理規則，找出並修正資料層的錯誤', '每日更新、公開可用'],
-  },
-  {
-    href: '#/binge-lab',
-    cover: 'binge',
-    meta: '內容策略 — 社群數據帳號',
-    title: '台灣追劇研究所',
-    desc: '把同一份排行資料做成一般觀眾會想看的內容。Threads／IG 帳號的定位、內容形式、圖卡與發文流程都由我設計；每篇貼文發出前先寫好假說與判定標準，用數據了解受眾。',
-    points: ['帳號定位與三種內容形式', '自動化產製，發文前人工核准', '每篇貼文都是一次事先設計好的測試'],
-  },
   {
     href: '#/heysong',
     cover: 'heysong',
     meta: '媒體企劃 — 品牌行銷提案',
     title: '黑松沙士：開一罐，開啟主場',
     desc: '宏盟 Shining Nova 計畫的四人小組提案，洞察與創意完整，但媒體段說不出「為什麼這樣投」。提案後我用目標、受眾、媒體組合、成效指標四個支柱重構媒體策略，讓每個選擇都對得回公開數據。',
+    skills: ['媒體與內容企劃', '成效指標與追蹤'],
     points: ['走期、選點與預算都附上數據來源與推算公式', '用看球動機切受眾，解決年齡重疊', 'KPI 拆進各階段：短期量想起、中期量行動、長期量認同'],
+  },
+  {
+    href: '#/netflix-dashboard',
+    cover: 'dashboard',
+    meta: '成效追蹤 — 市場比較工具',
+    title: 'Netflix 台灣影視排行資料互動儀表板',
+    desc: '起點是一個行銷需求：追蹤自家節目上架 Netflix 後每天的表現，給每週行銷會議使用。只看自家名次判斷不了好壞，所以我把五年多的 Netflix 台灣排行整理成資料庫與儀表板，建立同期、同類型作品的比較基準；整理出的排行資料用在公司的節目結案報告。',
+    skills: ['成效指標與追蹤', '數據整理與視覺化'],
+    points: ['建立比較基準，讓成效判斷有依據', '自訂指標：把名次換成可加總、可比較的積分', '資料用在公司的節目結案報告'],
+  },
+  {
+    href: '#/binge-lab',
+    cover: 'binge',
+    meta: '社群經營 — 內容測試與成效優化',
+    title: '台灣追劇研究所',
+    desc: '把排行資料做成社群內容，Threads／IG 帳號的定位、內容形式與發文流程都由我設計。每篇貼文發出前先寫好假說、比較對象與判定標準，像素材 A/B 測試一樣比較不同題型，並依台灣 Threads 的互動資料安排發文時段。',
+    skills: ['測試與優化', '成效指標與追蹤', '媒體與內容企劃'],
+    points: ['每篇貼文都是事先設計好的測試', '依階段選成效指標：瀏覽、追蹤、投票率', '每週檢討，依結果調整下一週內容'],
   },
   {
     href: '#/taiwan-book',
     cover: 'book',
-    meta: '資訊設計 — 教育出版',
+    meta: '內容企劃 — 為特定受眾溝通',
     title: '給學生看的台灣四百年圖解出口貿易史',
-    desc: '課本裡的出口貿易只是一串年代與商品名稱。這本三人分組製作的 A5 圖像小書，把台灣四百年的出口史改寫成國高中生看得懂的故事；我主要負責企劃、視覺系統與 AI 素材工作流，讓 20 頁維持一致。',
-    points: ['從讀者的問題出發規劃每一頁', '五個時期、同一個三頁敘事節奏', 'AI 素材 × Figma 元件與外掛'],
+    desc: '三人分組的課程專題，把台灣四百年出口史做成給國高中生的 A5 圖像小書；我主要負責企劃、視覺系統與 AI 素材工作流。企劃從受眾會問的問題出發，決定每一頁要回答什麼、用什麼形式呈現。',
+    skills: ['媒體與內容企劃', '數據整理與視覺化'],
+    points: ['從受眾的問題出發規劃內容', '20 頁維持同一套敘事節奏與視覺系統', '用 AI 與 Figma 元件提升產出效率'],
   },
+]
+
+const experience: { org: string; role: string; period: string; points: string[]; link?: [string, string] }[] = [
+  {
+    org: '宏盟媒體',
+    role: 'Marcom 實習生',
+    period: '2026/07–2026/08',
+    points: ['參與公司 Podcast 節目開發與企業 CSR 方案討論，從品牌形象的角度思考溝通方向', '透過產業課程與媒體工具分享，了解媒體策略與通路操作'],
+    link: ['#/heysong', '計畫期末提案：黑松沙士媒體策略'],
+  },
+  {
+    org: '彼此影業',
+    role: '開發部門實習生',
+    period: '2025/07–2026/02',
+    points: ['完成 4 份開發題材評估報告，分析受眾定位、市場潛力與同類型作品', '整理並分析影集收視數據，支援內部行銷策略討論'],
+    link: ['#/netflix-dashboard', '延伸專案：Netflix 台灣排行儀表板'],
+  },
+  {
+    org: '央廣 Podcast（主持人內克）',
+    role: '節目企劃實習助理',
+    period: '2025/06–2026/01',
+    points: ['負責 16 集節目企劃與內容素材整理，把議題轉化為適合聲音媒介的內容'],
+  },
+]
+
+const skillGroups: [string, string][] = [
+  ['數據分析', 'Excel・Tableau・Power BI'],
+  ['設計', 'Figma・Canva'],
+  ['AI 協作', 'Claude Code・OpenAI Codex・ChatGPT'],
+  ['語言', 'TOEIC 850，可閱讀英文資料並進行基礎工作溝通'],
 ]
 
 const personalIntro = {
   title: '吳景富',
-  subtitle: '國立政治大學廣播電視學系｜媒體企劃學程',
-  summary: '我把內容、市場與受眾資料整理成可被理解、可被比較、可支援判斷的工具。',
+  subtitle: '國立政治大學 廣播電視學系 四年級｜媒體企劃學程',
+  summary: '用數據找到受眾、驗證成效，再把結果說成別人聽得懂的話。',
+  seeking: '數位廣告投放・成效優化・廣告企劃・廣告業務',
+  proofs: [
+    ['宏盟媒體', 'Marcom 實習（2026/07–08）'],
+    ['結案報告', '我整理的排行資料用在公司的節目結案報告'],
+    ['媒體提案', '走期、選點、預算與 KPI 都對得回公開數據'],
+    ['測試思維', '每篇社群貼文先寫好假說與成效判定標準'],
+  ] as [string, string][],
   body: [
     '我的經驗橫跨影視內容開發、影展策劃與資料分析，關注內容如何被看見、被比較，並被觀眾選擇。',
     '我擅長從非結構化資訊中整理脈絡，結合資訊設計、資料視覺化與 AI 協作，將觀察轉化為能支援行銷、策展與策略判斷的作品。',
@@ -432,7 +483,7 @@ function ContactFooter() {
       <footer className="footer">
         <div className="container footerInner">
           <span>© 2026 WU CHING-FU</span>
-          <span>資訊設計 × 資料視覺化</span>
+          <span>數位廣告 × 數據</span>
         </div>
       </footer>
     </>
@@ -492,6 +543,18 @@ function WorkCover({ cover, title }: { cover: Work['cover']; title: string }) {
   return <img src={taiwanBook.cover} alt={`${title} 封面`} />
 }
 
+/** 案例頁「這個作品展現的能力」：能力名稱與首頁一致，後面接這個作品裡的具體證據 */
+function AbilityProof({ items }: { items: [Ability, string][] }) {
+  return (
+    <div className="abilityProof">
+      <p className="abilityProofTitle">這個作品展現的能力</p>
+      {items.map(([name, evidence]) => (
+        <div key={evidence}><strong>{name}</strong><p>{evidence}</p></div>
+      ))}
+    </div>
+  )
+}
+
 function SecHead({ zh, en }: { zh: string; en: string }) {
   return (
     <div className="secHead">
@@ -516,18 +579,19 @@ function PortfolioHome() {
             <img src={profilePhoto} alt="吳景富個人照片" />
           </div>
           <div className="heroLeft profileIntro">
-            <span className="eyebrow fade d1">CONTENT STRATEGY × DATA VISUALIZATION</span>
+            <span className="eyebrow fade d1">DIGITAL ADVERTISING × DATA</span>
             <h1 className="profileName fade d2">{personalIntro.title}</h1>
             <p className="profileSubtitle fade d2">{personalIntro.subtitle}</p>
             <p className="lead fade d2">{personalIntro.summary}</p>
-            <div className="profileBody fade d3">
-              {personalIntro.body.map(text => <p key={text}>{text}</p>)}
-            </div>
-            <div className="tagRow profileTags fade d3">
-              {personalIntro.highlights.map(item => <span key={item}>{item}</span>)}
-            </div>
+            <p className="seeking fade d3"><span>正在尋找實習</span>{personalIntro.seeking}</p>
+            <dl className="proofs fade d3">
+              {personalIntro.proofs.map(([term, desc]) => (
+                <div key={term}><dt>{term}</dt><dd>{desc}</dd></div>
+              ))}
+            </dl>
             <div className="actions fade d3">
               <button className="btn" type="button" onClick={() => scrollToId('works')}>查看作品</button>
+              <button className="btn ghost" type="button" onClick={() => scrollToId('about')}>經歷與技能</button>
               <button className="btn ghost" type="button" onClick={() => scrollToId('contact')}>與我聯絡</button>
             </div>
           </div>
@@ -537,6 +601,11 @@ function PortfolioHome() {
       <section className="section" id="works">
         <div className="container">
           <SecHead zh="精選作品" en="SELECTED WORKS" />
+          <div className="abilityStrip">
+            {abilities.map(([name, desc]) => (
+              <div key={name}><strong>{name}</strong><span>{desc}</span></div>
+            ))}
+          </div>
           <div className="works">
             {works.map(work => (
               <a className="work" href={work.href} key={work.href}>
@@ -547,6 +616,7 @@ function PortfolioHome() {
                   <p className="workMeta">{work.meta}</p>
                   <h3 className="workTitle">{work.title}</h3>
                   <p className="workDesc">{work.desc}</p>
+                  <div className="skillChips">{work.skills.map(skill => <span key={skill}>{skill}</span>)}</div>
                   <ul className="workPoints">
                     {work.points.map(point => <li key={point}>{point}</li>)}
                   </ul>
@@ -560,28 +630,27 @@ function PortfolioHome() {
 
       <section className="section" id="about">
         <div className="container">
-          <SecHead zh="關於" en="ABOUT" />
+          <SecHead zh="經歷與技能" en="EXPERIENCE & SKILLS" />
           <div className="aboutGrid">
-            <div className="aboutText">
-              {personalIntro.body.map(text => <p key={text}>{text}</p>)}
+            <div className="timeline">
+              {experience.map(item => (
+                <article key={item.org}>
+                  <div className="timelineHead">
+                    <h3>{item.org}<span>{item.role}</span></h3>
+                    <span className="timelinePeriod">{item.period}</span>
+                  </div>
+                  <ul>{item.points.map(point => <li key={point}>{point}</li>)}</ul>
+                  {item.link && <a className="timelineLink" href={item.link[0]}>{item.link[1]} →</a>}
+                </article>
+              ))}
             </div>
             <div>
-              <div className="skillGroup">
-                <p className="skillLabel">專長領域</p>
-                <ul className="skillList">
-                  <li>影視內容分析與市場脈絡整理</li>
-                  <li>資料清理、資料管線與互動視覺化</li>
-                  <li>資訊設計、圖像敘事與策展企劃</li>
-                </ul>
-              </div>
-              <div className="skillGroup">
-                <p className="skillLabel">工具</p>
-                <ul className="skillList">
-                  <li>Excel / Tableau / Power BI</li>
-                  <li>Python / Selenium / React / TypeScript</li>
-                  <li>Figma / Canva / Claude Code / OpenAI Codex</li>
-                </ul>
-              </div>
+              {skillGroups.map(([label, value]) => (
+                <div className="skillGroup" key={label}>
+                  <p className="skillLabel">{label}</p>
+                  <p className="skillValue">{value}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -597,7 +666,7 @@ function PortfolioHome() {
    ============================================================ */
 
 const taiwanBookToc: [string, string][] = [
-  ['摘要', 'tb-tldr'],
+  ['30 秒看懂', 'tb-tldr'],
   ['讀者問題', 'tb-questions'],
   ['設計決策', 'tb-decisions'],
   ['成果展示', 'tb-pages'],
@@ -636,7 +705,7 @@ function TaiwanBookCase() {
 
       <section className="section" id="tb-tldr">
         <div className="container">
-          <SecHead zh="三句話看懂" en="TL;DR" />
+          <SecHead zh="30 秒看懂" en="IN 30 SECONDS" />
           <div className="tldr">
             {taiwanBookTldr.map(([label, text]) => (
               <div key={label}>
@@ -645,6 +714,11 @@ function TaiwanBookCase() {
               </div>
             ))}
           </div>
+          <AbilityProof items={[
+            ['媒體與內容企劃', '先列出國高中生會問的 10 個問題，再決定每一頁要回答什麼、用什麼形式呈現。'],
+            ['數據整理與視覺化', '五個時期用同一個三頁節奏與同一組元件，讀者讀過一次就知道下一個時期怎麼讀。'],
+            ['媒體與內容企劃', '三人分組合作；我主要負責企劃、視覺系統與素材工作流，讓 20 頁維持一致。'],
+          ]} />
         </div>
       </section>
 
@@ -749,13 +823,11 @@ function TaiwanBookCase() {
    ============================================================ */
 
 const netflixToc: [string, string][] = [
-  ['摘要', 'nf-tldr'],
+  ['30 秒看懂', 'nf-tldr'],
   ['成果展示', 'nf-screens'],
-  ['專案脈絡', 'nf-context'],
-  ['資料管線', 'nf-pipeline'],
-  ['資料品質', 'nf-quality'],
   ['設計決策', 'nf-decisions'],
-  ['影響與角色', 'nf-impact'],
+  ['細節', 'nf-details'],
+  ['角色與工具', 'nf-impact'],
 ]
 
 function NetflixCase() {
@@ -767,7 +839,7 @@ function NetflixCase() {
       <header className="container caseHero">
         <span className="eyebrow">CASE STUDY · DATA PIPELINE · VISUALIZATION</span>
         <h1>Netflix 台灣影視排行資料互動儀表板</h1>
-        <p className="lead">公司想知道自家節目在 Netflix 上表現好不好，手上卻只有它自己的名次。我把五年多的 Netflix 台灣排行整理成資料庫與互動儀表板，讓任何一部作品都能和同期、同類型的作品放在一起比較。</p>
+        <p className="lead">起點是一個行銷需求：公司想追蹤自家節目上架 Netflix 後每天的表現，給每週行銷會議使用。但只看自家名次判斷不了好壞，所以我把五年多的 Netflix 台灣排行整理成資料庫與互動儀表板，建立同期、同類型作品的比較基準。</p>
         <div className="actions">
           <a className="btn" href={links.demo} target="_blank" rel="noreferrer">開啟 Live Demo ↗</a>
           <a className="btn ghost" href={links.github} target="_blank" rel="noreferrer">GitHub Repo ↗</a>
@@ -794,7 +866,7 @@ function NetflixCase() {
 
       <section className="section" id="nf-tldr">
         <div className="container">
-          <SecHead zh="三句話看懂" en="TL;DR" />
+          <SecHead zh="30 秒看懂" en="IN 30 SECONDS" />
           <div className="tldr">
             {tldr.map(([label, text]) => (
               <div key={label}>
@@ -803,6 +875,11 @@ function NetflixCase() {
               </div>
             ))}
           </div>
+          <AbilityProof items={[
+            ['成效指標與追蹤', '從「追蹤一檔節目每天的名次」出發，做成每週行銷會議與節目結案報告用得上的資料。'],
+            ['成效指標與追蹤', '只看自家數字判斷不了好壞，所以加入同期、同類型作品當比較基準，並把名次換成可加總的積分。'],
+            ['數據整理與視覺化', '把五年多的排行整理成資料庫；發現數字算錯就回頭修正，缺漏的期間直接標示，不讓報告建立在錯的數字上。'],
+          ]} />
         </div>
       </section>
 
@@ -838,9 +915,29 @@ function NetflixCase() {
         </div>
       </section>
 
-      <section className="section" id="nf-context" style={{ paddingTop: 0 }}>
+      <section className="section" id="nf-decisions" style={{ paddingTop: 0 }}>
         <div className="container">
-          <SecHead zh="專案脈絡" en="CONTEXT" />
+          <SecHead zh="設計決策" en="DESIGN DECISIONS" />
+          <p className="lead muted" style={{ marginBottom: 48 }}>不只是畫圖，而是定義資料怎麼被比較。</p>
+          <div className="steps">
+            {decisions.map(([no, title, desc]) => (
+              <div className="step" key={title}>
+                <span className="stepNo">{no}</span>
+                <h3>{title}</h3>
+                <p>{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section" id="nf-details" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <SecHead zh="給想看細節的人" en="DETAILS" />
+          <p className="lead muted" style={{ marginBottom: 32 }}>專案怎麼一步步長大、資料怎麼蒐集與清理、遇過哪些資料錯誤。點開來看。</p>
+          <details className="fold">
+            <summary>專案脈絡：從一張折線圖到一個資料產品</summary>
+            <div className="foldBody">
           <div className="proseGrid">
             <div className="prose">
               <h3 style={{ marginBottom: 16 }}>從一檔節目的行銷追蹤需求開始</h3>
@@ -874,12 +971,11 @@ function NetflixCase() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className="section" id="nf-pipeline" style={{ paddingTop: 0 }}>
-        <div className="container">
-          <SecHead zh="資料管線" en="DATA PIPELINE" />
+            </div>
+          </details>
+          <details className="fold">
+            <summary>資料管線：蒐集、校正與輸出</summary>
+            <div className="foldBody">
           <p className="lead muted" style={{ marginBottom: 48 }}>自動化蒐集與人工校正分開，所有修正都集中在轉換層，兼顧效率與資料品質。</p>
           <div className="steps">
             {pipeline.map(([no, title, desc]) => (
@@ -907,12 +1003,11 @@ function NetflixCase() {
               </div>
             </details>
           </div>
-        </div>
-      </section>
-
-      <section className="section" id="nf-quality" style={{ paddingTop: 0 }}>
-        <div className="container">
-          <SecHead zh="資料品質" en="DATA QUALITY" />
+            </div>
+          </details>
+          <details className="fold">
+            <summary>資料品質：四個發現並修正錯誤的例子</summary>
+            <div className="foldBody">
           <p className="lead muted" style={{ marginBottom: 48 }}>多數錯誤都是在圖表上看起來「怪怪的」才被發現，追下去才知道問題在資料層。以下四個例子都有寫成規格文件。</p>
           <div className="quality">
             {qualityCases.map(([title, problem, solution, status]) => (
@@ -928,37 +1023,14 @@ function NetflixCase() {
               </article>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className="section" id="nf-decisions" style={{ paddingTop: 0 }}>
-        <div className="container">
-          <SecHead zh="設計決策" en="DESIGN DECISIONS" />
-          <p className="lead muted" style={{ marginBottom: 48 }}>不只是畫圖，而是定義資料怎麼被比較。</p>
-          <div className="steps">
-            {decisions.map(([no, title, desc]) => (
-              <div className="step" key={title}>
-                <span className="stepNo">{no}</span>
-                <h3>{title}</h3>
-                <p>{desc}</p>
-              </div>
-            ))}
-          </div>
+            </div>
+          </details>
         </div>
       </section>
 
       <section className="section" id="nf-impact" style={{ paddingTop: 0 }}>
         <div className="container">
-          <SecHead zh="影響與角色" en="IMPACT & ROLE" />
-          <div className="steps" style={{ marginBottom: 64 }}>
-            {impactItems.map(([title, desc]) => (
-              <div className="step" key={title}>
-                <span className="stepNo">✓</span>
-                <h3>{title}</h3>
-                <p>{desc}</p>
-              </div>
-            ))}
-          </div>
+          <SecHead zh="我的角色與工具" en="ROLE & TOOLS" />
           <div className="proseGrid">
             <div className="prose">
               <h3 style={{ marginBottom: 16 }}>我負責的不只是實作，而是資料產品設計</h3>
@@ -990,7 +1062,7 @@ function NetflixCase() {
    ============================================================ */
 
 const bingeToc: [string, string][] = [
-  ['摘要', 'bl-tldr'],
+  ['30 秒看懂', 'bl-tldr'],
   ['內容規劃', 'bl-content'],
   ['產製流程', 'bl-system'],
   ['用測試了解受眾', 'bl-test'],
@@ -1028,7 +1100,7 @@ function BingeLabCase() {
 
       <section className="section" id="bl-tldr">
         <div className="container">
-          <SecHead zh="三句話看懂" en="TL;DR" />
+          <SecHead zh="30 秒看懂" en="IN 30 SECONDS" />
           <div className="tldr">
             {bingeTldr.map(([label, text]) => (
               <div key={label}>
@@ -1037,6 +1109,11 @@ function BingeLabCase() {
               </div>
             ))}
           </div>
+          <AbilityProof items={[
+            ['測試與優化', '每篇貼文發出前寫好假說、比較對象與判定標準，像素材 A/B 測試一樣比較「猜題」與「偏好題」。'],
+            ['成效指標與追蹤', '依階段選指標：新帳號先看瀏覽與追蹤增減，瀏覽不到 100 就不計算比率，避免被雜訊誤導。'],
+            ['媒體與內容企劃', '發文時段依台灣 Threads 全年互動資料安排；三種內容分工：固定回訪、建立專業、累積互動。'],
+          ]} />
         </div>
       </section>
 
@@ -1127,7 +1204,7 @@ function BingeLabCase() {
    ============================================================ */
 
 const heysongToc: [string, string][] = [
-  ['摘要', 'hs-tldr'],
+  ['30 秒看懂', 'hs-tldr'],
   ['問題診斷', 'hs-diagnosis'],
   ['重構決策', 'hs-decisions'],
   ['數字怎麼來', 'hs-data'],
@@ -1167,7 +1244,7 @@ function HeysongCase() {
 
       <section className="section" id="hs-tldr">
         <div className="container">
-          <SecHead zh="三句話看懂" en="TL;DR" />
+          <SecHead zh="30 秒看懂" en="IN 30 SECONDS" />
           <div className="tldr">
             {heysongTldr.map(([label, text]) => (
               <div key={label}>
@@ -1176,6 +1253,11 @@ function HeysongCase() {
               </div>
             ))}
           </div>
+          <AbilityProof items={[
+            ['媒體與內容企劃', '用目標、受眾、媒體組合、成效指標四個支柱重構媒體策略；走期跟著棒球行事曆、選點依捷運進出量。'],
+            ['成效指標與追蹤', '每個階段一個主 KPI：短期量品牌聯想、中期量發票登錄與 CPA、長期量年度品牌追蹤。'],
+            ['媒體與內容企劃', '預算用「目標觸及 × 頻次 ÷ 1,000 × CPM」反推，每個數字標明是實據、推論還是示意。'],
+          ]} />
         </div>
       </section>
 
